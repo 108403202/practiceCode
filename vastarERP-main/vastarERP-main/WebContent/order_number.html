@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="menu_style.css" rel="stylesheet" type="text/css">
+    <title>單號選單</title>
+    <link href="statics\css\searchform.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- toast messge CSS, JS -->
+    <link href="statics\css\toast.css" rel="stylesheet">
+    <script src="js\toast.js"></script>
+</head>
+
+<body bgcolor="#E0E0E0">
+    <div>
+        <form method="post" action="" class="form-query">
+            <div class="input">
+                <div>
+                    <span for="Order_No">單號</span>
+                    <input type="text" id="Order_No" name="Staff_No" size="10">
+                </div>
+
+                <div>
+                    <span for="Customer_Name">承購人名稱</span>
+                    <input type="text" id="Customer_Name" name="Staff_Name" size="10">
+                </div>
+            </div>
+
+
+            <div class="action">
+                <div class="div-form-button">
+                    <input type="button" name="action" value="確認" id="confirm"></input>
+                </div>
+                <div class="div-form-button">
+                    <input type="submit" name="action" value="新增"></input>
+                </div>
+                <div class="div-form-button">
+                    <input type="submit" name="action" value="刪除"></input>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+    <center>
+        <table id="approve_table" border="1">
+            <thead>
+                <tr>
+                    <td width="40"></td>
+                    <td>單號</td>
+                    <td>日期</td>
+                    <td>承購人編號</td>  
+                    <td>承購人名稱</td>
+                    <td>收貨人編號</td>
+                    <td>收貨人名稱</td>
+                    <td>銷售地點編號</td>
+                    <td>銷售地點名稱</td>
+                    <td>銷售人編號</td>
+                    <td>銷售人名稱</td>
+                    <td>製單人編號</td>
+                    <td>製單人名稱</td>
+                    <td>製單日期</td>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <script>
+            // 設置日期為今天
+            function returnToday() {
+                let td = new Date();
+                let day = td.getDate();
+                let month = td.getMonth() + 1;
+                let year = td.getFullYear();
+                console.log(year, typeof(year), month, typeof(month), day, typeof(day));
+                let date = td.getFullYear() + "-" + addZero(td.getMonth() + 1) + "-" + addZero(td.getDate());
+                date = date.toString();
+                console.log("returnToday()轉成字串的日期: ", date);
+                return date;
+            }
+            // 給日期補0
+            function addZero(n) {
+                return parseInt(n) >= 10 ? n.toString() : '0' + n;
+            }
+
+            var order_tb = document.getElementById('approve_table'); // 獲取 銷貨憑單表格節點
+            // console.log("銷貨憑單表格節點: ", order_tb);
+            var order_tb_tbody_list = order_tb.getElementsByTagName('tbody'); // 獲取 銷貨憑單表格 tbody 節點串列
+            // console.log(order_tb_tbody_list);
+            var order_tb_tbody = order_tb_tbody_list[0]; // 獲取 銷貨憑單表格 tbody 節點
+            console.log("銷貨憑單表格的tbody節點: ", order_tb_tbody);
+
+            //填入之前先把銷貨單頁面的表格清空
+            function salesTabClear(e){
+                console.log('清除銷貨單頁面表格');
+                let sales_tab = window.opener.document.getElementById('inside-sales-table');
+                var rows = sales_tab.rows.length; // rows 儲存Sidebar.php(銷貨單頁面)的銷貨單列數
+                console.log("銷貨單列數:" + rows);
+                console.log("銷貨單欄數:" + sales_tab.rows[0].cells.length);
+                
+                // 遍歷銷貨單頁面的表格, 標題和索引不遍歷, 所以i和j從1開始
+                for(let i=1; i<rows; i++){
+                    for(let j=1; j<sales_tab.rows[i].cells.length; j++){
+                        if(j !== 5){
+                            sales_tab.rows[i].cells[j].innerHTML = "" ;
+                        }
+
+                    }
+                }
+            }
+            
+            function orderSelect(e){
+            // 處理點選所要的 那一筆銷貨憑單資料 後，得到那一列的 單號和 承購人姓名, 並且自動填入到上面的空格
+                //alert("You click the table! ");
+                let target = e.target; //觸發事件的原件節點
+                let tar1 = target.parentNode; // 觸發事件的原件節點的父節點, 其實也就是你點選的那一列 的 列節點
+                console.log(tar1);
+                
+                let tar1Child = tar1.getElementsByTagName('td'); // 獲取列節點的子節點, 會獲得td節點
+                // console.log("你點選的 列 的td節點: ", tar1Child);
+                
+
+                // let tar1Child_Child = tar1Child[0].childNodes;
+                // console.log("列 的 td節點 的子節點: ", tar1Child_Child);
+            
+                // 這邊變數的 註解名稱 是以 銷貨單頁面顯示的名稱為主
+                let Order_No = tar1Child[1].innerHTML; // 單號
+                let Order_Date = tar1Child[2].innerHTML; // 單號日期
+                let Customer_No = tar1Child[3].innerHTML; // 承購人編號
+                let Customer_Name = tar1Child[4].innerHTML; // 承購人姓名
+                let Receiver_No = tar1Child[5].innerHTML; // 收貨人編號
+                let Receiver_Name = tar1Child[6].innerHTML; // 收貨人姓名
+                let Place_No = tar1Child[7].innerHTML; // 銷售地點編號
+                let Place_Name = tar1Child[8].innerHTML; // 銷售地點
+                let Sales_No= tar1Child[9].innerHTML; // 銷售人員編號
+                let Sales_Name = tar1Child[10].innerHTML; // 銷售人員姓名
+                let Create_No = tar1Child[11].innerHTML; // 製單人員編號
+                let Create_Name = tar1Child[12].innerHTML; // 製單人員姓名
+                let Create_Date = tar1Child[13].innerHTML; // 製單日期
+
+                console.log("單號: " + Order_No + "承購人姓名:" + Customer_Name);
+
+                // 將從員工表格獲得的代碼和名字填入上面的資料中
+                let orderNo = document.getElementById('Order_No');
+                let customerName = document.getElementById('Customer_Name');
+                // console.log(orderNo + " " + customerName);
+                orderNo.value = Order_No;
+                customerName.value = Customer_Name;
+
+
+                // 將銷貨憑單的資料填到 銷貨單頁面
+                window.opener.document.getElementById('purchasenameid').value  = Customer_Name; 
+                window.opener.document.getElementById('receivenameid').value  = Receiver_Name;
+                window.opener.document.getElementById('placenameid').value  = Place_Name;
+                window.opener.document.getElementById('seller').value  = Sales_Name;
+                window.opener.document.getElementById('making_name').value  = Create_Name;
+                window.opener.document.getElementById('Order_No').value  = Order_No;
+
+                //將銷貨憑單明細填入到 銷貨單頁面
+                orderDetailQuery(orderNo.value);
+
+                // 處理日期格式, 把從後段拿到的日期格式: yyyy/mm/dd , 轉換成 yyyy-mm-dd
+                console.log("從後端拿到的日期字串: ", Create_Date, typeof(Create_Date));
+                const date_arr =  Create_Date.split('/');
+                console.log(date_arr);
+                let date_verify = date_arr[0]; // 格式轉換成 yyyy-mm-dd的日期字串
+                for(let i=0; i<(date_arr.length-1); i++){
+                    date_verify += "-";
+                    date_verify += date_arr[i+1];
+
+                }
+                console.log(date_verify);
+                window.opener.document.getElementById('Order_Date_1').value  = date_verify;
+                window.opener.document.getElementById('Order_Date_2').value  = date_verify;
+            }
+
+            // 按下確認將得到的資料填入到銷貨單頁面
+            let confirm = document.getElementById('confirm');
+            confirm.addEventListener('click', orderConfirm, false);
+            function orderConfirm(){
+                console.log("按下確認鍵!!");
+                // 獲取選取的單號
+                OrderNo = window.opener.document.getElementById("Order_No");
+                if(OrderNo.value != ""){
+                    console.log(OrderNo.value);
+                    setTimeout(function(){
+                        window.close();
+                    }, 100);
+                }else{
+                    console.log('還沒有選擇!');
+                    setTimeout(function(){
+                        window.close();
+                    }, 100);
+                }
+                setTimeout(function(){
+                        window.close();
+                    }, 100);
+            }
+            
+
+            //銷貨憑單明細查詢api
+            function orderDetailQuery(OrderNo){// 參數 Order_No 用來儲存單號
+                //POST請求
+                axios.defaults.headers.post["Content-Type"] = "application/json;charset=utf-8";
+                axios.post('https://webapi.vastar.com.tw/erpapi/api/OrderDetail/Query',{
+                UserID: 'vastar',
+                Password: 'vastar@2673',
+                Order_No: OrderNo
+                })
+                .then( (response) => {
+                    console.log(response);
+                    if(response.data[0].Result == -1){
+                        // 即銷貨憑單明細不存在
+                        alert(response.data[0].Message);
+                        console.log(response.data[0].Message);
+                    }else if(response.data[0].Result == 0){
+                        console.log("銷貨明細存在");
+                        console.log("銷貨明細的詳細資料: ");
+                        
+                        for(let i=0;  i<response.data.length; i++){
+                            console.log(response.data[i]);
+                            // 找到銷貨單頁面中間的銷貨表格
+                            let sales_tab = window.opener.document.getElementById("inside-sales-table");
+                            let rows = sales_tab.rows.length; // rows 儲存Sidebar.php(銷貨單頁面)的銷貨單列數
+                            console.log("銷貨單列數:" + rows);
+                            // 將銷貨憑單明細填入銷貨單頁面中間的表格
+                            for(let j=0; j<rows; j++){
+                            console.log(sales_tab.rows[j].cells[1].innerHTML);
+                            if (sales_tab.rows[j].cells[1].innerHTML){
+                                // //有資料就不做處理, 讓迴圈接著跑下去
+                                console.log("第 ",j, " 列有資料 ");
+                            }else{
+                                console.log("為第 ", j, " 列新增資料 ");
+                                sales_tab.rows[j].cells[1].innerHTML = response.data[i].Product_Name; // 產品名稱
+                                sales_tab.rows[j].cells[2].innerHTML = response.data[i].Quantity; // 數量
+                                sales_tab.rows[j].cells[3].innerHTML = response.data[i].Product_Price; // 單價
+                                sales_tab.rows[j].cells[4].innerHTML = response.data[i].TotalPrice; // 金額
+                                
+                                
+                                // 銷售別欄位要等於從資料庫撈出來的Sales_Type, run過每個option後判讀
+                                let select_list = sales_tab.rows[j].cells[5].getElementsByTagName('select')[0]; // 一個存4個option的list
+                                for(let l=0; l<select_list.length; l++){
+                                    if(select_list.getElementsByTagName('option')[l].value == response.data[i].Sales_Type){
+                                        console.log(select_list.getElementsByTagName('option')[l].value);
+                                        select_list.value = select_list.getElementsByTagName('option')[l].value;
+                                        break;
+                                    }
+                                }
+                                // sales_tab.rows[j].cells[6].innerHTML = response.data[i].Remark; // 出貨明細
+                                sales_tab.rows[j].cells[6].innerHTML = response.data[i].Remark; // 備註
+                                break; // 填完資料就break出迴圈
+                                }
+                            }
+                        }
+
+                        // 計算總金額
+                        let lump_Sum = 0;
+                        let sales_tab = window.opener.document.getElementById("inside-sales-table");
+                        console.log(sales_tab);
+                        let rows = sales_tab.rows.length;
+                        console.log(rows);
+                        for (let i = 1; i < rows; i++) {
+                            // 每次按確認後都要將目前銷貨單有的金額全部加起來,
+                            if (sales_tab.rows[i].cells[4].innerHTML && (sales_tab.rows[i].cells[4]
+                                    .innerHTML !== "")) {
+                                let sum = sales_tab.rows[i].cells[4].innerHTML;
+                                console.log('銷貨頁面第', i, '列的金額', sum);
+                                console.log(typeof(parseInt(sum)), sum);
+                                sum = parseInt(sum);
+                                lump_Sum += sum;
+                                console.log(lump_Sum);
+                            }
+                        }
+                        let lumpSumPosition = window.opener.document.getElementById('lumpSum');
+                        console.log(lumpSumPosition);
+                        lumpSumPosition.value = lump_Sum;
+                        
+                    }else{
+                        console.log("response.data[0].Result 不是0也不是-1")
+                    }
+                        
+                    })
+                    .catch( (error) => console.log(error));
+                }
+
+            // 銷貨憑單查詢api 
+            OrderQuery();
+            function OrderQuery(){
+                /* step1. 從api獲得員工資料     */
+                OrderNo = window.opener.document.getElementById("Order_No");
+                OrderDate_1 = window.opener.document.getElementById("Order_Date_1");
+                OrderDate_2 = window.opener.document.getElementById("Order_Date_2");
+                // console.log("單號: ", OrderNo ,"日期起: ", OrderDate_1.value, "日期迄: ", OrderDate_2.value); 
+
+
+                if(OrderNo.value == null || OrderNo.value == undefined || OrderNo.value == ''){
+                    // console.log("單號為空");
+                    OrderNo.value = ''; // 單號為空, 將單號設定為空字串
+                }else{
+                    // console.log("單號為: ", OrderNo.value);
+                }
+
+                if(OrderDate_1.value == null || OrderDate_1.value == undefined || OrderDate_1.value == ''){
+                    // console.log('日期起為空');
+                    OrderDate_1.value = returnToday();
+                    // console.log(OrderDate_1.value);
+                }else{
+                    // console.log('日期起為: ', OrderDate_1.value);
+                }
+
+                if(OrderDate_2.value == null || OrderDate_2.value == undefined || OrderDate_2.value == ''){
+                    // console.log('日期迄為空');
+                    OrderDate_2.value = returnToday();
+                    // console.log(OrderDate_2.value);
+                }else{
+                    // console.log('日期迄: ', OrderDate_2.value);
+                }
+                
+                //POST請求
+                axios.defaults.headers.post["Content-Type"] = "application/json;charset=utf-8";
+                axios.post('https://webapi.vastar.com.tw/erpapi/api/Order/Query',{
+                UserID: 'vastar',
+                Password: 'vastar@2673',
+                Order_No: OrderNo.value,
+                Order_Date_1: OrderDate_1.value,
+                Order_Date_2: OrderDate_2.value
+                })
+                .then( (response) => {
+                    console.log(response);
+                    console.log("從api獲得的銷貨憑單資料筆數: ", response.data.length);
+                    if(response.data[0].Result == -1){
+                        // 如果沒有找到銷貨憑單
+                        console.log(response.data[0].Message);
+                        Toast.alert(`${response.data[0].Message}`);
+                        
+                    }else if(response.data[0].Result == 0){
+                        /*根據得到的response動態增加頁面下方的動態資料表格*/ 
+                        // 先增加列 -> 欄位 -> 節點
+                        for(let i=0; i<response.data.length; i++){
+                            let tr = document.createElement('tr'); // 
+
+                            let td1 = document.createElement('td');
+                            let td2 = document.createElement('td');
+                            let td3 = document.createElement('td');
+                            let td4 = document.createElement('td');
+                            let td5 = document.createElement('td');
+                            let td6 = document.createElement('td');
+                            let td7 = document.createElement('td');
+                            let td8 = document.createElement('td');
+                            let td9 = document.createElement('td');
+                            let td10 = document.createElement('td');
+                            let td11 = document.createElement('td');
+                            let td12 = document.createElement('td');
+                            let td13 = document.createElement('td');
+                            let td14 = document.createElement('td');
+
+                            let text1 = document.createTextNode(i+1);
+                            let text2 = document.createTextNode(response.data[i].Order_No);
+                            let text3 = document.createTextNode(response.data[i].Order_Date);
+                            let text4 = document.createTextNode(response.data[i].Customer_No); // 承購人
+                            let text5 = document.createTextNode(response.data[i].Customer_Name); 
+                            let text6 = document.createTextNode(response.data[i].Receiver_No); // 收貨人
+                            let text7 = document.createTextNode(response.data[i].Receiver_Name);
+                            let text8 = document.createTextNode(response.data[i].Place_No);
+                            let text9 = document.createTextNode(response.data[i].Place_Name);
+                            let text10 = document.createTextNode(response.data[i].Sales_No);
+                            let text11 = document.createTextNode(response.data[i].Sales_Name);
+                            let text12 = document.createTextNode(response.data[i].Create_No);
+                            let text13 = document.createTextNode(response.data[i].Create_Name);
+                            let text14 = document.createTextNode(response.data[i].Create_Date);
+
+                            td1.appendChild(text1);
+                            td2.appendChild(text2);
+                            td3.appendChild(text3);
+                            td4.appendChild(text4);
+                            td5.appendChild(text5);
+                            td6.appendChild(text6);
+                            td7.appendChild(text7);
+                            td8.appendChild(text8);
+                            td9.appendChild(text9);
+                            td10.appendChild(text10);
+                            td11.appendChild(text11);
+                            td12.appendChild(text12);
+                            td13.appendChild(text13);
+                            td14.appendChild(text14);
+
+                            tr.appendChild(td1);
+                            tr.appendChild(td2);
+                            tr.appendChild(td3);
+                            tr.appendChild(td4);
+                            tr.appendChild(td5);
+                            tr.appendChild(td6);
+                            tr.appendChild(td7);
+                            tr.appendChild(td8);
+                            tr.appendChild(td9);
+                            tr.appendChild(td10);
+                            tr.appendChild(td11);
+                            tr.appendChild(td12);
+                            tr.appendChild(td13);
+                            tr.appendChild(td14);
+
+
+                            order_tb_tbody.appendChild(tr);
+                            tr.addEventListener('click', salesTabClear, false);  // 為表格列添加事件, 清除表格
+                            tr.addEventListener('click', orderSelect, false);  // 為表格列添加事件, 選擇表格
+                            tr.addEventListener('dblclick', orderConfirm, false);  // 為表格列添加事件, 確認
+                            }
+                        }
+                })
+                .catch( (error) => console.log(error));
+            }
+            </script>
+</body>
+
+</html>

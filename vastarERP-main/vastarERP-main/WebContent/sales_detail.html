@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="sales_detail_style.css" rel="stylesheet" type="text/css">
+    <title>銷貨明細</title> 
+</head>
+<body bgcolor="#E0E0E0">
+    <span id="tab-1">訂單資訊</span>
+    <span id="tab-2">出貨明細</span>
+    
+    <!-- 頁籤按鈕 -->
+    <div id="tab">
+        <ul>
+            <li><a href="#tab-1">訂單資訊</a></li>
+            <li><a href="#tab-2">出貨明細</a></li>
+        </ul>
+    
+        <!-- 頁籤的內容區塊 -->
+        <div class="tab-content-1">
+            <table border="1"  rules="all" cellpadding="5" cellspacing="10" style="border: 1px solid #828282 ;
+            border-top: #DEDEDE; border-collapse: collapse; width: 100%; height: 100%;">
+                <thead>
+                    <tr> 
+                        <th>     </th>
+                        <th>產品名稱</th>               
+                        <th>數量</th>
+                        <th>單價</th>
+                        <th>金額</th>
+                        <th>銷售別</th>
+                        <th>備註欄</th>
+                    </tr>
+                </thead>        
+                        <tr contenteditable="true">
+                            <td contenteditable="false">1</td> 
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>
+                            <td></td>  
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">2</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>
+                            <td></td>  
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">3</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>
+                            <td></td>                      
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">4</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">5</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>
+                        </tr>
+                        
+
+            </table>
+        </div>
+        <div class="tab-content-2">
+            <table align="left"></table>
+                <td align="right"><b>產品編號：</b></td>
+                <td><input type="text" name="purchaser_name" id="purchasenameid" size="13" required></td>
+                <td align="right"><b>產品名稱：</b></td>
+                <td><input type="text" name="place_sale" size="13" required></td>
+                <td align="right"><b>配送方式：</b></td>
+                <td><select  name="type_select" align="center" style="width:13%;height:13%; font-size:16px" onChange="location = this.options[this.selectedIndex].value;">
+                    <option>自取</option>
+                </select></td>
+                <td align="right"><b>數量：</b></td>
+                <td><input type="text" name="place_sale" size="13" required></td>
+            </table>    
+            <table border="1"  rules="all" cellpadding="5" cellspacing="10" style="border: 1px solid #828282 ;
+            border-top: #DEDEDE; border-collapse: collapse; width: 100%; height: 100%;">       
+                <thead>
+                    <tr> 
+                        <th>     </th>
+                        <th>產品條碼</th>               
+                        <th>產品名稱</th>
+                        <th>數量</th>
+                        <th>預計出貨日期</th>
+                        <th>收件人</th>
+                        <th>電話</th>
+                        <th>手機</th>
+                        <th>地址</th>
+                    </tr>
+                </thead>        
+                        <tr contenteditable="true">
+                            <td contenteditable="false">1</td> 
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>  
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">2</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>  
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">3</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>                      
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">4</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">5</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        
+
+            </table>
+        </div>
+    </div>
+</body>
+</html>

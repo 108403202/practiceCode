@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="sales_order_style.css" rel="stylesheet" type="text/css">
+    <title>客戶主檔</title>
+    <script type="text/javascript">
+        function test(test){
+      //頁面跳轉
+        window.open('add_product.html',config='height=300,width=500',target='_self');
+        }
+    </script>
+</head>
+<body bgcolor="#E0E0E0">
+
+    <div class="layout">
+        <div class="layout_logo">
+            <ul class="drop-down-menu">
+                <li style="font-size:20px"><a href="#">系統資料</a>
+                    <ul>
+                        <li style="font-size:20px"><a href="#">權限設定</a>
+                        </li>
+                        <li style="font-size:20px"><a href="#">系統設定</a>
+                        </li>
+                        <li style="font-size:20px"><a href="#">類別設定</a>
+                        </li>
+                    </ul>
+                </li>
+                <li style="font-size:20px"><a href="#">基本資料</a>
+                    <ul>
+                        <li style="font-size:20px"><a href="#">部門主檔</a>
+                        </li>
+                        <li style="font-size:20px"><a href="#">員工主檔</a>
+                        </li>
+                        <li style="font-size:20px"><a href="#">客戶主檔</a>
+                        </li>
+                        <li style="font-size:20px"><a href="#">產品主檔</a>
+                        </li>
+                    </ul>
+                </li>
+                <li style="font-size:20px"><a href="#">庫存管理</a>
+                </li>
+                <li style="font-size:20px"><a href="#">各類單據</a>
+                    <ul>
+                        <li style="font-size:20px"><a href="#">銷售單</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul><br/> 
+               
+            <form action="" method="post"></form>
+                <table align="left">
+                    <thead>
+                        <tr> 
+                            <td align="right"><b>客戶代號：</b></td>
+                            <td><input type="text" name="purchaser_name" id="purchasenameid" size="13" required></td>         
+                            <td align="right"><b>客戶姓名：</b></td>
+                            <td><input type="text" name="place_sale" id="placenameid" size="13" required></td>
+                        </tr>
+                        <tr> 
+                            <td align="right"><b>聯絡電話：</b></td>
+                            <td><input type="text" name="purchaser_phone_number" id="purchasephoneid" size="13" required></td>
+                            <td align="right"><b>手機1：</b></td>
+                            <td><input type="text" name="seller_name"  size="13" required></td>
+                            <td align="right"><b>手機2：</b></td>
+                            <td><input type="text" name="seller_name"  size="13" required></td>                           
+                        </tr>
+                        <tr> 
+                            <td align="right"><b>郵遞區號：</b></td>
+                            <td><input type="text" name="receiver_name" id="receivenameid" size="13" required></td>
+                            <td align="right"><b>縣市：</b></td>
+                            <td><input type="text" name="receiver_name" id="receivenameid" size="13" required></td> 
+                            <td align="right"><b>鄉鎮市區：</b></td>
+                            <td><input type="text" name="receiver_name" id="receivenameid" size="13" required></td>
+                        </tr>>
+                        <tr>
+                            <td align="right"><b>地址：</b></td>
+                            <td><input type="text" name="receiver_name" id="receivenameid" size="13" required></td>                           
+                        </tr>
+                    
+                </table>
+            </form>    
+        </div>
+        <div class="layout_name">
+            <h1 align="center">廣南國際有限公司</h1>
+            <h1 align="center"><b>Vastar International Corp.</b></h1>
+            <select  name="type_select" align="center" style="width:370px;height:60px; font-size:26px" onChange="location = this.options[this.selectedIndex].value;">
+                <option value="sales_order.html">客戶主檔</option>
+                <option value="pre_Order_voucher.html">預購憑單</option>
+            </select>
+        </div>
+        <div class="layout_right">
+            <img src="statics/img/vastar_logo.png" alt="logo" width="275" height="125"/><br/>
+
+            <b>單號：</b>
+            <input type="text" name="order_number" size="10" required>
+            <input name="order_number_button" type="button" value="查詢" onclick="window.open('making_staff_name.html',config='height=300,width=500',target='_self');" style="width:40px;height:25px; font-size:14px"/><br/> 
+            <b>銷售日期起</b>
+            <input id="start_date" type="date"><br/>
+            <b>銷售日期迄</b>
+            <input id="end_date" type="date"><br/>
+            <input name="invoice" type="button" id="Submit" value="發票" />
+        </div>
+        <div class="layout_form">
+            <table border="1"  rules="all" cellpadding="5" cellspacing="50" style="border: 3px solid ; 
+            border-collapse: collapse; width:1500px;">
+                <thead>
+                    <tr onclick="test('產品名稱')"> 
+                        <th>     </th>
+                        <th>郵遞區號</th>               
+                        <th>縣市</th>
+                        <th>鄉鎮市區</th>
+                        <th>地址</th>
+                    </tr>
+                </thead>        
+                        <tr contenteditable="true">
+                            <td contenteditable="false">1</td> 
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td>                   
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">2</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td>                      
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">3</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td>                   
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">4</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td>                     
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">5</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td>                    
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">6</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td>                      
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">7</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                  
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">8</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td>                    
+                        </tr>
+        
+</body>
+
+</html>
+
+

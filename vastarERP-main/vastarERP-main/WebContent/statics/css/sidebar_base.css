@@ -1,0 +1,314 @@
+/*Google Fonts Import Links*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,300&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body{
+  height:100vh;
+}
+.sidebar {
+  /*設計整個sidebar的顏色, 區塊,
+    將高度設定為100%
+    */
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 260px;
+  background: #1b1c17;
+  z-index: 100;
+  transition: all 0.5s ease;
+}
+.sidebar.close {
+  width: 78px;
+}
+.sidebar .logo-details {
+  /*設定整個sidebar中包含了, 小icons, logo標題名稱*這是一整個content*/
+  height: 60px;
+  width: 100%; /*讓寬度能夠填滿100%*/
+  display: flex; /*設定flex, 這樣之後這個content的元素會順順的排下去*/
+  align-items: center;
+}
+.sidebar .logo-details i {
+  font-size: 30px;
+  color: #fff;
+  /*background:green; 用來幫忙進行設定後續四項屬性的值,
+    幫忙設定height, min-width, text-align, line-height
+    這樣才可以對準旁邊的logo_name達到想要的效果, 
+    設定結束後就將background註解掉
+    */
+  height: 50px;
+  min-width: 78px;
+  text-align: center;
+  line-height: 50px;
+}
+.sidebar .logo-details .logo_name {
+  font-size: 22px;
+  color: #fff;
+  font-weight: 600;
+  transition: 0.3s ease;
+  transition-delay: 0.1s;
+}
+.sidebar.close .logo-details .logo_name {
+  opacity: 0;
+  pointer-events: none; /*讓事件點擊設定為none, 這樣才不會擋到menu的按鈕*/
+  transition-delay: 0s;
+}
+.sidebar .nav-links {
+  /*先設定背景顏色幫忙調整區塊*/
+  height: 100%; /*設定高度為100%，因為目前.nav-links後面沒有元素，所以設定高度
+    為100%後，整個下面都會變成red。
+    */
+  padding: 30px 0 150px 0;
+  overflow: auto; /*超出範圍的話會自動生成滾輪*/
+}
+.sidebar.close .nav-links {
+  overflow: visible; /*超出範圍的話會自動生成滾輪*/
+}
+
+.sidebar .nav-links::-webkit-scrollbar {
+  display: none; /*將滾輪樣式設定為無*/
+}
+.sidebar .nav-links li {
+  position: relative; /*相較於正常位置的定位，是相對於他的基準元素
+    原文叫:cotaining block, 雖然可能大部分是他的parent element,
+    但還是有例外, 但目前這個例子他的cotaining block就是他parent的cotent area.
+    詳情請搜尋: Cotaining block
+    */
+  list-style: none;
+  transition: all 0.4s ease; /*設定動畫讓滑鼠移動的時候看起來更有質感*/
+}
+/*設定滑鼠移動到nav-links li上的屬性    */
+.sidebar .nav-links li:hover {
+  background: #4d4941;
+}
+.sidebar .nav-links li .icon-links {
+  display: flex; /*設定此功能後, 關於icon-links就會自動排成一行*/
+  align-items: center; /*縱向留白處理*/
+  justify-content: space-between; /*橫向留白處理*/
+}
+.sidebar.close .nav-links li .icon-links {
+  display: block;
+}
+.sidebar .nav-links li i {
+  /*這四個屬性直接複製上面 .logo-details的*/
+  /*font-size同樣可以調整icon的大小, 不是只能調整文字大小*/
+  height: 50px;
+  min-width: 78px;
+  text-align: center;
+  line-height: 50px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.sidebar .nav-links li.showMenu i.arrow {
+  /*設定下拉icon旋轉180度*/
+  transform: rotate(-180deg);
+}
+.sidebar.close .nav-links i.arrow {
+  display: none;
+}
+
+.sidebar .nav-links li a {
+  display: flex;
+  align-items: center; /*設定到這裡的時候，會發現dropdown圖標會被推到下一列
+    所以需要特別注意!!!!, 此處是如何進行設定
+    */
+  text-decoration: none; /*設定連結文字沒有底線*/
+}
+.sidebar .nav-links li a .link_name {
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+  transition: all 0.4s ease;
+}
+.sidebar.close .nav-links li a .link_name {
+  opacity: 0;
+  pointer-events: none;
+}
+/*開始設定 子清單 sub-menu */
+.sidebar .nav-links li .sub-menu {
+  padding: 6px 6px 14px 80px; /*先設定這個ul的padding
+    似乎只是將這個ul設定在中間的位置, 其他時候可以根據狀況調整.
+    */
+  margin-top: -10px; /*一樣, 根據狀況調整*/
+  background: #4d4941; /*設定sub-menu顏色跟整個sidebar做區分*/
+  display: none; /*先將sub-menu隱藏起來, 之後可能利用js再處理*/
+}
+.sidebar .nav-links li.showMenu .sub-menu {
+  display: block;
+}
+
+.sidebar .nav-links li .sub-menu a {
+  /*設定子清單中的 a*/
+  color: #fff;
+  font-size: 15px; /*一樣根據情況, 設定比link_name小一點, 
+    link_name的font-size是18px;
+    */
+  padding: 5px 0;
+  white-space: nowrap; /*決定如何處理元素內的空白字元,
+    原本元素內的文字會字字換行, 設定此屬性後, 就不會換行了
+    */
+
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+.sidebar .nav-links li .sub-menu a:hover {
+  opacity: 1;
+}
+.sidebar.close .nav-links li .sub-menu {
+  position: absolute;
+  left: 100%;
+  top: -10px;
+  margin-top: 0;
+  padding: 10px 20px;
+  border-radius: 0 6px 6px 0; /*設定讓邊線有圓弧感*/
+  transition: 0s;
+  opacity: 0; /*先設定透明度為0*/
+  display: block;
+  pointer-events: none; /*之後再去了解pointer-events*/
+}
+/*滑鼠移動到sidebar上面時候, 就會顯示出裡面的資料*/
+.sidebar.close .nav-links li:hover .sub-menu {
+  top: 0; /*搭配點擊前, transition屬性就可以製造出高級感*/
+  opacity: 1; /*先設定透明度為0*/
+  pointer-events: auto; /*之後再去了解pointer-events*/
+  transition: all 0.4s ease;
+}
+.sidebar .nav-links li .sub-menu .link_name {
+  display: none;
+}
+/*設定sidebar縮回去, 子清單的名字狀態*/
+
+.sidebar.close .nav-links li .sub-menu .link_name {
+  font-size: 18px;
+  opacity: 1;
+  display: block; /*設定完後第一個li class name是link_name的 才會顯示出來*/
+}
+.sidebar .nav-links li .sub-menu.blank {
+  opacity: 1; /*先設定透明度為0*/
+  pointer-events: auto; /*之後再去了解pointer-events*/
+  padding: 3px 20px 6px 16px;
+  opacity: 0;
+  pointer-events: none;
+}
+.sidebar .nav-links li:hover .sub-menu.blank {
+  top: 50%;
+  transform: translateY(-50%);
+}
+/*
+.sidebar .profile-details{
+    position:fixed;
+    bottom:0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:#1d1b31;
+    padding:6px 0;
+}
+
+.sidebar .profile-details .profile-content{
+    display:flex;
+    align-items:center;
+}
+.sidebar .profile-details img{
+    height:52px; 
+    width:52px;
+    object-fit: cover;
+    border-radius:16px;
+    margin:0 14px 0 12px;
+    background: #1d1b31;
+    padding:10px;
+}
+.sidebar .profile-details .profile_name,
+.sidebar .profile-details .job{
+    color:#fff;
+    font-size:18px;
+    font-weight:500;
+}
+.sidebar .profile-details .job{
+    font-size:12px;
+
+}
+*/
+
+.sidebar .nav-links li .profile-details {
+  position: fixed;
+  bottom: 0;
+  width: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #4d4941;
+  padding: 12px 0;
+  transition: all 0.5s ease;
+}
+.sidebar.close .nav-links li .profile-details {
+  background: none;
+}
+.sidebar.close .nav-links li .profile-details {
+  width: 78px;
+}
+.sidebar .nav-links li .profile-details .profile-content {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar.close .nav-links li .profile-details .profile-content img {
+  padding: 10px;
+}
+.sidebar .nav-links li .profile-details .profile_name,
+.sidebar .nav-links li .profile-details .job {
+  color: #f2ebc9;
+  font-size: 18px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.sidebar.close .nav-links li .profile-details i,
+.sidebar.close .nav-links li .profile-details .profile_name,
+.sidebar.close .nav-links li .profile-details .job {
+  display: none;
+}
+.sidebar .nav-links li .profile-details .job {
+  font-size: 12px;
+}
+
+/*設定右邊的內容頁面*/
+.home-section {
+  /*讓右邊頁面的內容以flex排列*/
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: center;
+  padding: 10px; /*留一點空間*/
+
+  position: relative;
+  background: #e4e9f7;
+  height: 100vh;
+  left: 260px; /*這部分就看我們的sidebar 有多大去對應設定*/
+  width: calc(100% - 260px); /*寬度設定為 100%寬度 減 260px*/
+  transition: all 0.5s ease;
+}
+.sidebar.close ~ .home-section {
+  /*選擇在.sidebar.close之後的所有 .home-section選擇器*/
+  left: 78px; /*也是看我們多大去對應設定, 78px剛好只會剩下icon*/
+  width: calc(100% - 78px); /*寬度設定為 100%寬度 減 78px*/
+}
+.home-section .home-content .bx-menu {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #11101d;
+  font-size: 35px;
+  margin: 0 15px;
+}
+.info {
+  /*設定所有的字體*/
+  font-size: 18px;
+  font-weight: 900;
+  padding: 2px;
+}

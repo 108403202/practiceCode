@@ -1,0 +1,236 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  min-height:100vh; 
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  font-weight: bold;
+  background: #184022;
+}
+.customer-container{
+  /* position:relative; */
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  justify-content: center;
+  align-items:center;
+  /* background: #184022; */
+  width:100%;
+}
+/* navbar */
+.customer-container .customer-tool-bar{
+  font-size:14px;
+  background:#7B806B;
+  max-width:900px;
+  width:100%;
+  padding:0 5px;
+}
+.customer-container .customer-tool-bar .someBtn{
+  list-style-type: none;
+  display:flex;
+  flex-direction:wrap;
+  flex-wrap:wrap;
+  padding:5px 0;
+}
+.customer-container .customer-tool-bar .someBtn a{
+  color:#fff;
+  text-decoration:none;
+  padding:5px;
+  transition:all 0.3s linear;
+}
+.customer-container .customer-tool-bar .someBtn a:hover{
+  text-decoration:underline;
+  color:#aaa;
+  
+}
+/* header */
+.customer-container header{
+  max-width:900px;
+  width:100%;
+}
+/* main-content 客戶詳細資料的部分 */
+.customer-container .main-content{
+  position: relative;
+  max-width:900px;
+  width:100%;
+  border-radius:0 0 6px 6px;
+  padding:10px 30px;
+  margin:0 15px;
+  background-color: #fff;
+  font-size:1rem;
+}
+.customer-container .main-content header .vastar-header{
+  position:relative;
+  /* background:yellow; */
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items:center;
+  justify-content:flex-start;
+}
+.customer-container .main-content header .vastar-header .vastar-title{
+  text-align:center;
+  position:absolute;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+}
+.customer-container .main-content header .vastar-header .vastar-title span{
+  /* max-width:200px; */
+  width:100%;
+  font-size:24px;
+}
+
+.customer-container .main-content header .vastar-header img{
+  width:100%;
+  max-width:150px;
+}
+.customer-container .main-content form{
+  position: relative;
+  margin-top:4px;
+  min-height:490px;
+}
+.customer-container .main-content form .details{
+  /* margin-top:30px;  */
+}
+.customer-container .main-content form .title{
+  display: block;
+  font-size:20px;
+  color: #184022;
+  margin-bottom: 8px;
+}
+.customer-container .main-content form .fields{
+  /* fields裡面是 input-fields */
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap:wrap;
+
+}
+.customer-container .main-content form .input-fields{
+  display:flex;
+  flex-direction: column; /*直式排列*/
+  /* background: yellow; */
+  /* calc() function 裡面可以放計算 */
+  width: calc(100% / 4 - 10px); 
+  /* width:200px; */
+}
+.customer-container .main-content form .input-fields.input-width-checkbox{
+  display:grid;
+  place-items: center;
+}
+.input-fields.input-width-checkbox input{
+  margin:8px 0;
+  height:20px;
+}
+.customer-container .main-content form .input-fields.span-12{
+  width:100%;
+}
+.customer-container .main-content form .input-fields input{
+  outline: none;
+  font-size:14px;
+  border:1px solid #7B806B;
+  border-radius: 5px;
+  height:25px;
+  color:#184022;
+  padding: 0 15px;
+  margin:4px 0;
+  transition:all 0.5s;
+}
+.customer-container .main-content form .input-fields input:focus{
+  border:2px solid #114004;
+}
+.input-fields label{
+  font-size:14px;
+}
+.input-fields .hidden{
+  visibility: hidden;
+}
+.customer-container .main-content form .some-btn{
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  align-items: center;
+  justify-content: flex-end;
+  margin:15px 0;
+}
+.customer-container .main-content form button{
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  height:45px;
+  max-width: 50px;
+  /* background-color:#114004; */
+  width:100%;
+  font-weight:bold;
+  border: 1px solid #000;
+  outline: none;
+  color:#000;
+  border-radius:5px;
+  margin-left:10px;
+  transition:all 0.3s linear;
+  cursor: pointer;
+}
+.customer-container .main-content form button:hover{
+  background:#000;
+  color:#fff;
+  border: none;
+}
+.customer-container .main-content form button i{
+  font-size:20px;
+  margin: 0 6px;
+}
+
+/* the middle customer-table */
+.table-container{
+  width:100%;
+}
+.table-container .customer-table{
+  width:100%;
+  max-width:900px;
+  margin:5px auto 10px;
+  /* border:#000 solid 1px; */
+  /* padding: 5px; */
+}
+.table-container table{
+  display:block;
+  overflow: auto;
+  white-space: nowrap;
+  margin: 0 auto;
+  width: 100%;
+  max-height: 220px;
+  border-collapse:collapse;
+  border:#eff2e4 solid 1px;
+  border-radius:5px;
+  cursor:pointer;
+  /* position:relative; */
+}
+.table-container table thead{
+  width:100%;
+  background: gray;
+  color: #fff;
+  text-align:center;
+  /* sticky讓table的thead可以移動 */
+  position:sticky;
+  top:0;
+  z-index:1;
+}
+.table-container table thead th{
+  font-size:1.2rem;
+  padding:0 0.2rem;
+  /* border:black solid 2px; */
+
+}
+.table-container table tbody tr td{
+  text-align: center;
+  background: #fff;
+  border:gainsboro solid 2px;
+  padding:5px;
+}
+.table-container table tbody tr:hover td{
+  background:#eff2e4;
+}

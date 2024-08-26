@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Drop Down Sidebar Menu</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="statics\css\Sidebar.css" rel="stylesheet">
+    <!-- toast messge CSS, JS -->
+    <link href="statics\css\toast.css" rel="stylesheet">
+    <script src="js\toast.js"></script>
+    <!-- widget.js 日期相關方法, Cookie相關方法, 補0到4碼方法-->
+    <script src="js\widget.js"></script>
+    <!--loding.css-->
+    <!-- <link href="statics/css/loding.css" rel="stylesheet"> -->
+    <!--Boxicons CDN Links -->
+    <link href='https://unpkg.com/boxicons@2.1.3/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+    <div class="sidebar close">
+        <div class="logo-details">
+            <i class='bx bxs-cat'></i>
+            <span class="logo_name">Vastar_ERP</span>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="#">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="link_name">Dashboard</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="#">系統資料</a></li>
+                    <li><a class="link_name" href="#">基本資料</a></li>
+                    <li><a class="link_name" href="#">庫存管理</a></li>
+                    <li><a class="link_name" href="#">各類單據</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="icon-links">
+                    <a href="#">
+                        <i class='bx bx-cog'></i>
+                        <span class="link_name">系統設定</span>
+                    </a>
+                    <i class='bx bx-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">系統設定</a></li>
+                    <li><a href="#">權限設定</a></li>
+                    <li><a href="#">系統設定</a></li>
+                    <li><a href="#">類別設定</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="icon-links">
+                    <a href="#">
+                        <i class='bx bx-collection'></i>
+                        <span class="link_name">基本資料</span>
+                    </a>
+                    <i class='bx bx-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">基本資料</a></li>
+                    <li><a href="#">部門主檔</a></li>
+                    <li><a href="staff.php">員工主檔</a></li>
+                    <li><a id="customer_link">客戶主檔</a></li>
+                    <li><a href="#">產品主檔</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="icon-links">
+                    <a href="#">
+                        <i class='bx bx-cabinet'></i>
+                        <span class="link_name">庫存管理</span>
+                    </a>
+                    <i class='bx bx-chevron-down arrow'></i>
+                </div>
+
+            </li>
+            <li>
+                <div class="icon-links">
+                    <a href="#">
+                        <i class='bx bxs-spreadsheet'></i>
+                        <span class="link_name">各類單據</span>
+                    </a>
+                    <i class='bx bx-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">各類單據</a></li>
+                    <li><a href="Sidebar.html">銷貨退(憑)單</a></li>
+                    <li><a href="pre_order_voucher_ver2.php">預購單</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="profile-details">
+                    <div class="profile-content">
+                        <!--<img src="statics/img/vastar_logo.png" alt="profileImg">-->
+                    </div>
+                    <div class="name-job">
+                        <div id = "user-name" class="profile_name">
+                        </div>
+                        <div id = "user-type" class="user-job">員工相關資訊</div>
+                    </div>
+                    <i class='bx bx-log-out'></i>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+    <section class="home-section">
+        <!--part1 -->
+        <!--home-content算做 part1 -->
+        <div class="home-content">
+            <i class='bx bx-menu'></i>
+            <img class="vastar-logo" src="statics/img/vastar_logo.png" alt="vastar_logo">
+            <span class="title">廣南國際有限公司</span>
+            <span class="title_en">Vastar International Corporation</span>
+            <!--<span class="document-title">銷貨(退憑)單</span>-->
+
+            <!--選擇選單-->
+            <div class="select">
+                <select name="type_select" onChange="location = this.options[this.selectedIndex].value;">
+                    <option value="Sidebar.html">銷貨(退)憑單</option>
+                    <option value="pre_order_voucher_ver2.php">預購憑單</option>
+                </select>
+            </div>
+        </div>
+
+        <!--part2 -->
+        <form action="#">
+            <div class="container">
+                <!-- container 算做 part2 -->
+
+                <!--承購人, 聯絡電話, 收貨人-->
+                <div class="customer-info">
+                    <div class="input-box">
+                        <span class="info">承購人</span>
+                        <input type="text" name="purchaser_name" id="purchasenameid" required>
+                        <input type="button" id="purchaser_button" name="purchaser_name_button" class="query-btn" value="查詢"
+                            onclick="openPurchaser()" />
+                    </div>
+                    <div class="input-box">
+                        <span class="info">連絡電話</span>
+                        <input type="text" name="purchaser_phone_number" id="purchasephoneid" required>
+                        <input type="button" id="phone_button" name="purchaser_phone_number_button" class="query-btn" value="查詢"
+                            onclick="openPurchaser()">
+                    </div>
+                    <div class="input-box">
+                        <span class="info">收貨人</span>
+                        <input type="text" name="receiver_name" id="receivenameid" required>
+                        <input type="button" id="receiver_button" name="receiver_name_button" class="query-btn" value="查詢"
+                            onclick="openReceiver()">
+                    </div>
+                </div>
+
+                <!--銷貨地點, 銷貨人員, 製單人員-->
+                <div class="sales-info">
+                    <div class="input-box">
+                        <span class="info">銷貨地點</span>
+                        <input type="text" name="place_sale" id="placenameid" required>
+                        <input type="button" id="place_button" name="place_sale_button" class="query-btn" value="查詢"
+                            onclick="window.open('place_sale.html',config='height=300,width=500',target='_self');">
+                    </div>
+                    <div class="input-box">
+                        <span class="info">銷售人員</span>
+                        <input type="text" id="seller" required>
+                        <input type="button" id="seller_button" name="seller_name_button" class="query-btn" value="查詢"
+                            onclick="window.open('seller.html',config='height=300,width=500',target='_self');" />
+                    </div>
+                    <div class="input-box">
+                        <span class="info">製單人員</span>
+                        <input type="text" id='making_name' required>
+                        <input type="button" id="making_name_button" class="query-btn" value="查詢"
+                            onclick="window.open('create.html',config='height=300,width=500',target='_self');">
+                    </div>
+                </div>
+
+                <!--單號, 銷售日期起, 銷售日期迄-->
+                <div class="sales-date">
+                    <div class="input-box">
+                        <span class="info">單號</span>
+                        <input type="text" id="Order_No" disabled>
+                        <input type="button" class="query-btn" value="查詢" onclick="openOrderQuery()">
+                    </div>
+                    <div class="input-box">
+                        <span class="info">銷售日期起</span>
+                        <input type="date" id="Order_Date_1" disabled>
+                    </div>
+                    <div class="input-box">
+                        <span class="info">銷售日期迄</span>
+                        <input type="date" id="Order_Date_2" disabled>
+                        <input type="button" value="發票" class="bill" onclick="openBill()">
+                    </div>
+
+                    <!-- 新增銷貨單成功的toast notification  -->
+
+
+                </div>
+            </div>
+        </form>
+
+
+        <!--part3 -->
+        <!--中間的銷貨單內容表格列數先設定只有一個-->
+        <div class="sales-table" id="sales-table">
+            <table rules="all" border="1" cellpadding="10" cellspacing="50" id="inside-sales-table" disabled>
+                <thead>
+                    <tr>
+                        <th width="30"></th>
+                        <th>產品名稱</th>
+                        <th>數量</th>
+                        <th>單價</th>
+                        <th>金額</th>
+                        <th>銷售別</th>
+                        <th>出貨明細</th>
+                        <th>備註欄</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr contenteditable="false">
+                        <td contenteditable="false" align="center">1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <select id="sale_category" name="sale_category">
+                                <option value="銷售">銷售</option>
+                                <option value="贈品">贈品</option>
+                                <option value="銷退">銷退</option>
+                                <option value="贈品銷退">贈品銷退</option>
+                                <option value="贈品銷退">贈品補差額</option>
+                            </select>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr contenteditable="false">
+                        <td align="center">2</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <select id="sale_category" name="sale_category">
+                                <option value="銷售">銷售</option>
+                                <option value="贈品">贈品</option>
+                                <option value="銷退">銷退</option>
+                                <option value="贈品銷退">贈品銷退</option>
+                                <option value="贈品銷退">贈品補差額</option>
+                            </select>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr contenteditable="false">
+                        <td contenteditable="false" align="center">3</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <select id="sale_category" name="sale_category">
+                                <option value="銷售">銷售</option>
+                                <option value="贈品">贈品</option>
+                                <option value="銷退">銷退</option>
+                                <option value="贈品銷退">贈品銷退</option>
+                                <option value="贈品銷退">贈品補差額</option>
+                            </select>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr contenteditable="false">
+                        <td contenteditable="false" align="center">4</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <select id="sale_category" name="sale_category">
+                                <option value="銷售">銷售</option>
+                                <option value="贈品">贈品</option>
+                                <option value="銷退">銷退</option>
+                                <option value="贈品銷退">贈品銷退</option>
+                                <option value="贈品銷退">贈品補差額</option>
+                            </select>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr contenteditable="false">
+                        <td contenteditable="false" align="center">5</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <select id="sale_category" name="sale_category">
+                                <option value="銷售">銷售</option>
+                                <option value="贈品">贈品</option>
+                                <option value="銷退">銷退</option>
+                                <option value="贈品銷退">贈品銷退</option>
+                                <option value="贈品銷退">贈品補差額</option>
+                            </select>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr contenteditable="false">
+                        <td contenteditable="false" align="center">6</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <select id="sale_category" name="sale_category">
+                                <option value="銷售">銷售</option>
+                                <option value="贈品">贈品</option>
+                                <option value="銷退">銷退</option>
+                                <option value="贈品銷退">贈品銷退</option>
+                                <option value="贈品銷退">贈品補差額</option>
+                            </select>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr contenteditable="false">
+                        <td contenteditable="false" align="center">7</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <select id="sale_category" name="sale_category">
+                                <option value="銷售">銷售</option>
+                                <option value="贈品">贈品</option>
+                                <option value="銷退">銷退</option>
+                                <option value="贈品銷退">贈品銷退</option>
+                                <option value="贈品銷退">贈品補差額</option>
+                            </select>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr contenteditable="false">
+                        <td contenteditable="false" align="center">8</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <select id="sale_category" name="sale_category">
+                                <option value="銷售">銷售</option>
+                                <option value="贈品">贈品</option>
+                                <option value="銷退">銷退</option>
+                                <option value="贈品銷退">贈品銷退</option>
+                                <option value="贈品銷退">贈品補差額</option>
+                            </select>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr contenteditable="false">
+                        <td contenteditable="false" align="center">9</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <select id="sale_category" name="sale_category">
+                                <option value="銷售">銷售</option>
+                                <option value="贈品">贈品</option>
+                                <option value="銷退">銷退</option>
+                                <option value="贈品銷退">贈品銷退</option>
+                                <option value="贈品銷退">贈品補差額</option>
+                            </select>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr contenteditable="false">
+                        <td contenteditable="false" align="center">10</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <select id="sale_category" name="sale_category">
+                                <option value="銷售">銷售</option>
+                                <option value="贈品">贈品</option>
+                                <option value="銷退">銷退</option>
+                                <option value="贈品銷退">贈品銷退</option>
+                                <option value="贈品銷退">贈品補差額</option>
+                            </select>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+        <!--part4 -->
+        <!--已付款, 餘額-->
+        <form action="#">
+            <div class="footer-form">
+                <div class="payment-info">
+                    <div class="input-box">
+                        <span class="info">已付款</span>
+                        <input type="text" id="amount_paid" placeholder="140">
+                    </div>
+                    <div class="input-box">
+                        <span class="info">餘額</span>
+                        <input type="text" id="amount_balance" placeholder="140">
+
+                    </div>
+                </div>
+
+                <!--總金額, 折扣金額,折扣%數, 銷售額-->
+                <div class="total-info">
+                    <div class="input-box">
+                        <span class="info">定價總金額</span>
+                        <input type="text" id="lumpSum" disabled>
+                    </div>
+                    <div class="input-box">
+                        <span class="info">折扣金額</span>
+                        <input type="text" class="discount_calculate" id='discount_amount'>
+                    </div>
+                    <div class="input-box">
+                        <span class="info">折扣%數</span>
+                        <input type="number" class="discount_calculate" id='discount_percent'>
+                    </div>
+                    <div class="input-box">
+                        <span class="info">實際銷售額</span>
+                        <input type="number" class="discount_calculate" id='amount_sales'  placeholder="0">
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <!--part5 -->
+        <!--單據審核, 核准, 掛載, 新增, 刪除, 下一筆-->
+        <div class="somebtn">
+            <div class="tool-box">
+                <!--單據審核, 核准, -->
+                <div class="check-box check1">
+                    <input type="button" class="audit-btn" value="單據審核">
+                    <input type="text" id='review' required>
+                    <input type="button" class="query-btn" value="查詢"
+                        onclick="window.open('document_review.php',config='height=300,width=500',target='_self');">
+                </div>
+                <div class="check-box check2">
+                    <input type="button" class="approved-btn" value="核准">
+                    <input type="text" id='approve' required>
+                    <input type="button" class="query-btn" value="查詢"
+                        onclick="window.open('approve.php',config='height=300,width=500',target='_self');">
+                </div>
+                <!-- 查詢、新增模式, 掛載, 新增, 刪除, 下一筆-->
+                <div class="check-box">
+                    <input type="button" value="銷售額" class="some-btn" onclick=openSales()>
+                    <select name="type_select" id="actionselect" onchange="lockOrderInsert()">
+                        <option value="insert" class="some-btn">新增</option>
+                        <option value="search" class="some-btn"><button onclick="openQuery()">查詢</button></option>
+                    </select> 
+                    <input type="button" value="修改" class="some-btn">
+                    <input type="button" value="刪除" class="some-btn">
+                    <input type="button" value="儲存" class="some-btn">
+                    <input type="button" value="掛載" class="some-btn" onclick="openUpload()">
+                    <input type="button" value="下一筆" class="some-btn" id="next_one">
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // 這邊要處理讓 製單人員 欄位 可以直接顯示 登入者的名稱
+            let staff_no = getCookie("User_No");
+            localStorage.setItem("Create_No", staff_no);
+            //POST請求 登入範例
+            axios.defaults.headers.post["Content-Type"] = "application/json;charset=utf-8";
+            axios.post('https://webapi.vastar.com.tw/erpapi/api/Staff/List',{
+            UserID: 'vastar',
+            Password: 'vastar@2673',
+            Staff_No: staff_no,
+            Name: '',
+            FuzzySearch: ''
+            })
+            .then( (response) => {
+                console.log(response);
+                console.log(response.data.length);
+                const making_name = document.getElementById("making_name");
+                making_name.value = response.data[0].Name; // 使製單人員欄位先自動填入登入者的姓名
+            })
+            .catch( (error) => console.log(error));
+
+            // 把今天的日期儲存在localStorage
+            localStorage.setItem('Create_Date', returnToday());
+            localStorage.setItem('Order_Date', returnToday());
+
+            // 讓承購人欄位, 連絡電話欄位 在填寫時，按下 Enter 鍵 可以直接跳到 承購人查詢頁面
+            const purchaser_input = document.getElementById("purchasenameid");
+            purchaser_input.focus();
+            purchaser_input.addEventListener("blur", (e) =>{
+                const target = e.target; // 節點
+                console.log(target);
+                console.log(target.value.length);
+                if(target.value.length >0 && target.value!='<brs>'){
+                    document.getElementById("purchaser_button").click();
+                }
+            }, false);
+
+            // 當跳離承購人欄位後會自動跳到搜尋頁面
+            // purchaser_input.addEventListener("blur", (e) => {
+            //     const target = e.target; // 節點
+            //     console.log(target);
+            //     console.log(target.value);
+            //     console.log(target.ChildNodes);
+            //     if(target.value.length > 0){
+            //         document.getElementById("purchaser_button").click();
+            //     }
+            // }, false);
+            const phone_input = document.getElementById("purchasephoneid");
+            phone_input.addEventListener("blur", (e) =>{
+                const target = e.target; // 節點
+                console.log(target);
+                console.log(target.value.length);
+                if(target.value.length >0 && target.value!='<brs>'){
+                    document.getElementById("phone_button").click();
+
+                }
+            }, false);
+            // 為收貨人欄位增加Enter快捷鍵
+            const receiver_input = document.getElementById("receivenameid");
+            receiver_input.addEventListener("blur", (e) =>{
+                const target = e.target; // 節點
+                console.log(target);
+                console.log(target.value.length);
+                if(target.value.length >0 && target.value!='<brs>'){
+                    document.getElementById("receiver_button").click();
+
+                }
+            }, false);
+
+            // 讓銷貨地點欄位, 在填寫時，按下 Enter 鍵 可以直接跳到 銷貨地點查詢頁面
+            const place_input = document.getElementById("placenameid");
+            place_input.addEventListener("blur", (e) =>{
+                const target = e.target; // 節點
+                console.log(target);
+                console.log(target.value.length);
+                if(target.value.length >0 && target.value!='<brs>'){
+                    document.getElementById("place_button").click();
+
+                }
+            }, false);
+            // 讓銷售人員欄位, 在填寫時，按下 Enter 鍵 可以直接跳到 銷售人員查詢頁面
+            const seller_input = document.getElementById("seller");
+            seller_input.addEventListener("blur", (e) =>{
+                const target = e.target; // 節點
+                console.log(target);
+                console.log(target.value.length);
+                if(target.value.length >0 && target.value!='<brs>'){
+                    document.getElementById("seller_button").click();
+
+                }
+            }, false);
+            // 讓製單人員欄位, 在填寫時，按下 Enter 鍵 可以直接跳到 製單人員查詢頁面
+            const create_input = document.getElementById("making_name");
+            create_input.addEventListener("blur", (e) =>{
+                const target = e.target; // 節點
+                console.log(target);
+                console.log(target.value.length);
+                if(target.value.length >0 && target.value!='<brs>'){
+                    document.getElementById("making_name_button").click();
+
+                }
+            }, false);
+
+            // 為左邊sidebar的客戶主檔link 添加 openCustomer
+            const customer_link = document.getElementById("customer_link");
+            customer_link.addEventListener("click", openCustomer, false);
+
+        }, false);
+
+        // 讓下拉可以呈現sub-menu的功能
+        let arrow = document.querySelectorAll(".arrow");
+        /*選取所有class name有 arrow的選擇器
+                    然後建立一個串列，基本上就是所有有下拉icon的*/
+        for (var i = 0; i < arrow.length; i++) {
+            arrow[i].addEventListener("click", (e) => {
+                let arrowParent = e.target.parentElement.parentElement;
+
+                arrowParent.classList.toggle("showMenu");
+            });
+        }
+
+        // 讓sidebar縮小至左邊的功能
+        let sidebar = document.querySelector(".sidebar");
+        let sidebarBtn = document.querySelector(".bx-menu");
+        console.log(sidebarBtn);
+        sidebarBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("close");
+        });
+
+        // 左下角登出icon加入登出功能
+        let logoutBtn = document.querySelector(".bx-log-out");
+        console.log(logoutBtn);
+        logoutBtn.addEventListener('click', () => {
+            console.log(document.cookie); // 會得到一串cookie值是以分號串接的cookie
+            var cuser_name = getCookie("cuser_name");
+            alert(cuser_name + "\n確定要登出嗎?");
+            window.location = "index.html"; // 登出跳轉回登入頁面
+        });
+        // 開啟客戶主檔頁面
+        function openCustomer(){
+            let my_customer_window = window.open("customer.html", "_blank", "width=900,height=600");
+            my_customer_window.moveTo(50, 50);
+        }
+
+        // 開啟發票頁面
+        function openBill() {
+            window.open('bill.html', 'height=100,width=500,left=500', '_self');
+        }
+
+        //開啟承購人查詢頁面
+        function openPurchaser() {
+            let my_purchaser_window = window.open("purchaser_name.html", "_blank", "width=1000,height=600");
+            my_purchaser_window.moveTo(50, 50);
+        }
+        //開啟收貨人查詢頁面
+        function openReceiver() {
+            let my_receiver_window = window.open("receiver_name.html","_blank" ,"width=1200,height=400" );
+            my_receiver_window.moveTo(180, 400);
+        }
+        //開啟查詢頁面
+        function openQuery() {
+            let my_query_window = window.open("Query.html","_blank" ,"width=1300,height=700" );
+            my_query_window.moveTo(180, 80);
+        }
+        //開啟單號查詢頁面
+        function openOrderQuery() {
+            let my_order_query_window = window.open("order_number.html","_blank" ,"width=1300,height=700" );
+            my_order_query_window.moveTo(180, 80);
+        }
+        // 開啟產品名稱頁面
+        function openAddProduct() {
+            //頁面跳轉
+            if (checkOrderInsert()) {
+                window.open('add_product.php', "_blank", "width=1360,height=400");
+            }
+        }
+        // 開啟出貨明細
+        function openSalesDetail() {
+            if (checkOrderInsert()) {
+                window.open('saledetail.html',"_blank", config = 'height=400,width=800',);
+                my_purchaser_window.moveTo(50, 50);
+
+            }
+        }
+        //開啟銷售額頁面
+        function openSales() {
+            // if (checkOrderInsert()) {
+                window.open('sales.html',"_blank", config = 'height=400,width=880',);
+                my_purchaser_window.moveTo(50, 50);
+
+            // }
+        }
+        function openUpload(){
+            let my_upload_window = window.open("document_upload.php","_blank" ,"width=1200,height=400" );
+            my_upload_window.moveTo(180, 200);
+        }
+        // // 實作一方法將銷貨憑單缺少的資料, 加入提示框提醒使用者輸入
+        // function remindOrderInsert(){
+        // }
+        
+        
+        // new // 判斷右上方銷貨憑單查詢時，無法填寫左上角新增資料
+        function lockOrderInsert() {
+            let Order_action = document.getElementById('actionselect');
+            if (Order_action.value == 'insert') {
+                // console.log("");
+                document.getElementById("Order_No").disabled = true;
+                document.getElementById("Order_Date_1").disabled = true;
+                document.getElementById("Order_Date_2").disabled = true;
+
+                document.getElementById("purchasenameid").required = true;
+                document.getElementById("purchasenameid").disabled = false;
+                document.getElementById("purchasephoneid").required = true;
+                document.getElementById("purchasephoneid").disabled = false;
+                document.getElementById("receivenameid").required = true;
+                document.getElementById("receivenameid").disabled = false;
+                document.getElementById("placenameid").required = true;
+                document.getElementById("placenameid").disabled = false;
+                document.getElementById("seller").required = true;
+                document.getElementById("seller").disabled = false;
+                document.getElementById("making_name").required = true;
+                document.getElementById("making_name").disabled = false;
+            } else if (Order_action.value == 'search') {
+                // document.getElementById("purchasenameid").required = false;
+                // document.getElementById("purchasenameid").disabled = true;
+                // document.getElementById("purchasephoneid").required = false;
+                // document.getElementById("purchasephoneid").disabled = true;
+                // document.getElementById("receivenameid").required = false;
+                // document.getElementById("receivenameid").disabled = true;
+                // document.getElementById("placenameid").required = false;
+                // document.getElementById("placenameid").disabled = true;
+                // document.getElementById("seller").required = false;
+                // document.getElementById("seller").disabled = true;
+                // document.getElementById("making_name").required = false;
+                // document.getElementById("making_name").disabled = true;
+
+                // document.getElementById("Order_No").disabled = false;
+                // document.getElementById("Order_Date_1").disabled = false;
+                // document.getElementById("Order_Date_2").disabled = false;
+                // 打開單號查詢畫面
+                openQuery();
+                Order_action.value = Order_action.options[0].value
+                
+            }
+        }
+
+        // 判斷上方銷貨憑單新增API需要的參數是否為空, 有空 -> 不能新增銷貨憑單, 沒有空 -> 呼叫銷貨憑單新增API
+        // 參數有空值 -> 回傳false, 參數沒有空值 -> 回傳true
+        function checkOrderInsert() {
+            const purchasenameid = document.getElementById('purchasenameid');
+            const receivenameid = document.getElementById('receivenameid');
+            const placenameid = document.getElementById('placenameid');
+            const seller = document.getElementById('seller');
+            const making_name = document.getElementById('making_name');
+            let check = 0; //check為紀錄欄位缺失
+            let text = ""; // 提示訊息
+            // 目前沒有檢查電話, 因為電話有可能是空值
+            if (purchasenameid.value == "" || purchasenameid.value == null ||
+                purchasenameid.value == undefined) {
+                // console.log("承購人沒有填寫資料!");
+                text += " 承購人沒有填寫資料!";
+                check++;
+            }
+            if (receivenameid.value == "" || receivenameid.value == null ||
+                receivenameid.value == undefined) {
+                // console.log("收貨人沒有填寫資料!");
+                text += " 收貨人沒有填寫資料!";
+                check++;
+            }
+            if (placenameid.value == "" || placenameid.value == null ||
+                placenameid.value == undefined) {
+                // console.log("銷貨地點沒有填寫資料!");
+                text += " 銷貨地點沒有填寫資料!";
+                check++;
+            }
+            if (seller.value == "" || seller.value == null ||
+                seller.value == undefined) {
+                // console.log("銷售人員沒有填寫資料!");
+                text += " 銷售人員沒有填寫資料!";
+                check++;
+            }
+            if (making_name.value == "" || making_name.value == null ||
+                making_name.value == undefined) {
+                // console.log("製單人員沒有填寫資料!");
+                text += " 製單人員沒有填寫資料!";
+                check++;
+            }
+
+            if (check > 0) {
+                console.log("資料未填寫完整");
+                // toast notification 
+                Toast.alert("資料未填寫完整:" +`${text}`)
+                // alert(text);
+                console.log(check);
+                // check = 0;
+                return false;
+            } else {
+                // // 銷貨憑單新增API需要的參數都有了, 不用跳出toast-notification,
+                // 因為 orderInsert() 會跳出 銷貨單新增成功 的toast-notification
+                console.log(check);
+                console.log("資料填寫正確");
+                return true;
+            }
+
+        }
+
+
+        // 獲得中間銷貨單表格tbody的tr list 串列節點, salestab_tbody_list
+        const salestab = document.getElementById("inside-sales-table");
+        const salestab_tbody_list = salestab.getElementsByTagName("tbody")[0].getElementsByTagName('tr');
+        console.log("salestab_tbody_list :", salestab_tbody_list);
+
+        //為產品名稱第一格添加銷貨憑單新增事件
+        //為每一列的 產品名稱欄位 添加事件
+        for (let i = 0; i < salestab_tbody_list.length; i++) {
+            const tr = salestab_tbody_list[i]; // 給每一列增加方法
+            tr.addEventListener('click', checkOrderInsert, false);
+            tr.addEventListener('click', orderInsert, false);
+            tr.addEventListener("click", getClickedTr, false);
+
+            const td_product_name = salestab_tbody_list[i].getElementsByTagName('td')[1]; 
+            td_product_name.addEventListener("click", openAddProduct, false);
+            // let td4 = salestab_tbody_list[i].getElementsByTagName('td')[4];
+            // td4.addEventListener('input', calculateLumpSum, false);
+
+            const td_sales_deatail = salestab_tbody_list[i].getElementsByTagName('td')[6];
+            
+            td_sales_deatail.addEventListener("click", openSalesDetail, false); // 改成等新增完該列銷貨明細後, 再允許新增此列的出貨明細
+        }
+        // 之後把方法分得更細, 讓獲取列的方法分離出來
+        function getClickedTr(e) {
+            if (checkOrderInsert()) { // 呼叫chckOrderInsert去檢查
+                let target = e.target; // 點選的欄位
+                console.log(target);
+                let tr_clicked = target.parentNode.getElementsByTagName('td')[0].firstChild.nodeValue; // 點擊的列的列數
+                // 如果產品名稱的td.inner.length > 0, 代表有元素
+                for(let i=0; i<salestab_tbody_list.length; i++){ // 每次重頭開始找, 找到第一個空白的列, 設為tr_clicked, 跳出迴圈
+                    // td_product_name 代表使用者新增的銷貨單表格那一列 的 產品名稱
+                    let td_product_name = salestab_tbody_list[i].getElementsByTagName("td")[1].innerHTML;
+                    // console.log("td_product_name: ", td_product_name);
+                    if(i < tr_clicked){ // 在i < tr_clicked 的情況下找到空白行
+                        if(td_product_name.length === 0){ 
+                        //  如果銷貨表格那列沒有產品, 就是空白的列, 設為 tr_clicked
+                        //  被點選的td 的列數編號, 並在之後用cookie存取, 方便add_product頁面 呼叫 api/OrderDetail/Insert 
+                        //  作為 Item_No參數 的值
+                        tr_clicked = (i+1); // 
+                        break; // 找到第一個空白的列, 設為參數就可以break了
+                        }
+                    }else{ // 當 i === tr_clicked 的時候
+                        break; // break 出來
+                    }
+                }
+                console.log("tr_clicked", tr_clicked);
+                 // 將點選的列 給定tdClicked cookie變數
+                document.cookie = `trClicked = ${tr_clicked}; path=/; max-age=3600;`;
+                document.cookie = `detailtrClicked = ${tr_clicked}; path=/; max-age=3600;`;
+                // localStorage.setItem('Item_No', trNo);
+            }
+        }
+
+        // 給中間的銷貨單表格增加或減少產品
+        // function add?? 待製作
+
+        // 每當銷貨單中間的表格有數值的時候, 計算總金額
+        function calculateLumpSum() {
+            let lumpSumPosition = document.getElementById('lumpSum');
+            let sum = 0;
+            for (let i = 0; i < salestab_tbody_list.length; i++) {
+                sum += parseInt(salestab_tbody_list.getElementsByTagName('td')[4].innerHTML);
+            }
+            lumpSumPosition.value = sum;
+        }
+
+        // 計算折扣金額和折扣趴數, 都會對應總金額
+        document.querySelectorAll('.discount_calculate')
+            .forEach(e => e.addEventListener('input', function() {
+                var lumpSumPosition = document.getElementById('lumpSum');
+                var discount_amount = document.getElementById('discount_amount');
+                var discount_percent = document.getElementById('discount_percent');
+                var sales_summury = document.getElementById('amount_sales')
+                if (parseInt(discount_percent.value) > 100) {
+                    discount_percent.value = 100;
+                } else if (parseInt(discount_percent.value) < 0) {
+                    discount_percent.value = 0;
+                }
+                if (parseInt(discount_amount.value) > parseInt(lumpSumPosition.value)) {
+
+                    discount_amount.value = lumpSumPosition.value
+                } else if (parseInt(discount_amount.value) < 0) {
+                    discount_amount.value = 0
+                }
+                if (lumpSumPosition != '<br>' && e.id == 'discount_amount') {
+                    discount_percent.value = (discount_amount.value / lumpSumPosition.value * 100).toFixed(2);
+                    sales_summury.value = lumpSumPosition.value - discount_amount.value;
+                } else if (lumpSumPosition != '<br>' && e.id == 'discount_percent') {
+                    discount_amount.value = (lumpSumPosition.value *
+                        discount_percent.value / 100).toFixed(2);
+                    sales_summury.value = lumpSumPosition.value - discount_amount.value;
+
+                }
+            }));
+
+
+        // 將銷貨單日期設定為今天
+        setToday();
+        function setToday() {
+            var Order_date_1 = document.getElementById('Order_Date_1');
+            Order_date_1.value = returnToday();
+            console.log("(在body下的js) 日期起: ", Order_date_1.value);
+            console.log("銷售日期起: ", Order_date_1.value);
+            var Order_date_2 = document.getElementById('Order_Date_2');
+            Order_date_2.value = returnToday();
+            console.log("(在body下的js) 日期起: ", Order_date_2.value);
+        }
+
+        // 回傳今天的日期 格式為: "yyyy-mm-dd"
+        function returnToday() {
+            let td = new Date();
+            let day = td.getDate();
+            let month = td.getMonth() + 1;
+            let year = td.getFullYear();
+            // console.log(year, typeof(year), month, typeof(month), day, typeof(day));
+            let date = td.getFullYear() + "-" + addZero(td.getMonth() + 1) + "-" + addZero(td.getDate());
+            date = date.toString();
+            console.log("returnToday()轉成字串的日期: ", date);
+            return date;
+        }
+        // 給日期補0
+        function addZero(n) {
+            return parseInt(n) >= 10 ? n.toString() : '0' + n;
+        }
+
+
+
+        // 重整頁面, 目前換言之就是下一筆, (之後補)但記得要先確認存檔, 並且詢問使用者 
+        function refreshPage() {
+            let x;
+            let r = confirm("確定重新整理為下一筆嗎!");
+            if (r == true) {
+                x = "你按下的是\"確定\"按鈕。";
+                console.log(x);
+                localStorage.clear();
+                window.location.reload();
+            } else {
+                x = "你按下的是\"取消\"按鈕。";
+                console.log(x);
+            }
+        }
+        let next_one = document.getElementById('next_one');
+        console.log(next_one);
+        next_one.addEventListener('click', refreshPage, false);
+
+        // 銷貨憑單新增
+        function orderInsert() {
+            if (checkOrderInsert()) {
+                //POST請求
+                axios.defaults.headers.post["Content-Type"] = "application/json;charset=utf-8";
+                axios.post('https://webapi.vastar.com.tw/erpapi/api/Order/Insert', {
+                    UserID: 'vastar',
+                    Password: 'vastar@2673',
+                    Order_Date: localStorage.getItem('Order_Date'),
+                    Customer_No: localStorage.getItem('Customer_No'),
+                    Receiver_No: localStorage.getItem('Receiver_No'),
+                    Place_No: localStorage.getItem('Place_No'),
+                    Sales_No: localStorage.getItem('Sales_No'),
+                    Create_No: localStorage.getItem('Create_No'),
+                    Create_Date: localStorage.getItem('Create_Date')
+                })
+                .then((response) => {
+                    console.log(response);
+                    console.log(response.data.length);
+                    if (response.data.Result == 0) {
+                        // toast notification 
+                        Toast.show(`${response.data.Message}`, "success");
+
+                        console.log(response.data.Message);
+                        console.log(response.data.Order_No);
+                        const Order_No = document.getElementById('Order_No');
+                        console.log(Order_No);
+                        Order_No.value = response.data.Order_No;
+                        localStorage.setItem('Order_No', response.data.Order_No);
+                        // alert(response.data.Message);
+                        for(let i=0; i<salestab_tbody_list.length; i++){
+                            let tr = salestab_tbody_list[i];
+                            tr.removeEventListener("click", orderInsert, false);
+                            console.log("tr", (i+1) , tr);
+                            console.log("Order insert success, remove function  orderInsert of tr");
+                        }
+                        
+
+                    } else {
+                        // toast notification 
+                        Toast.show(`${response.data.Message}`, "error");
+                        console.log(response.data.Message);
+                    }
+                }).catch((error) => console.log(error));
+            }
+        }
+
+        //  承購人呼叫
+        </script>
+
+</body>
+<script>
+
+</script>
+
+</html>

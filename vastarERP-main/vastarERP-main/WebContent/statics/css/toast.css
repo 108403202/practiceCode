@@ -1,0 +1,64 @@
+.toast{
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: auto;
+    font-size: 18px;
+    font-weight:bold;
+    max-width:400px;
+    padding: 6px;
+    background: #ccc;
+    color:#333;
+    pointer-events: none;
+    text-align: center;
+    border:1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+    /* 一開始載入頁面, 吐司訊息是還沒出現的 */
+    visibility:hidden;
+    opacity: 0;
+    transition: opacity 0.2s, top 0.2s, visibility 0.2s ;
+}
+
+.toast--alert{
+    position: fixed;
+    top: 0;
+    left:0;
+    right:0;
+    margin: auto;
+    font-size: 18px;
+    font-weight:bold;
+    max-width:400px;
+    padding: 6px;
+    background: #ccc;
+    color:#333;
+    pointer-events: none;
+    text-align: center;
+    border:1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+    /* 一開始載入頁面, 吐司訊息是還沒出現的 */
+    visibility:hidden;
+    opacity: 0;
+    transition: opacity 0.2s, top 0.2s, visibility 0.2s ;
+}
+
+.toast--visible{
+    top:0;
+    opacity: 1;
+    visibility: visible;
+}
+
+.toast--success{
+    background: #07260F;
+    border-color:#07260F;
+    color:#fff;
+}
+
+.toast--error{
+    background: red;
+    border-color:red;
+    color:#fff;
+}

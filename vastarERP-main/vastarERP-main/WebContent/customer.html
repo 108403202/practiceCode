@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="statics/css/customer.css">
+
+    <!-- toast messge CSS, JS -->
+    <link href="statics\css\toast.css" rel="stylesheet">
+    <script src="js\toast.js"></script>
+
+    <!----===== Iconscout CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>客戶主檔</title>
+</head>
+<body>
+    <div class="customer-container">
+        <nav class="customer-tool-bar">
+            <ul class="someBtn">
+                <li class="btn"><a href="">新增</a></li>
+                <li class="btn"><a href="">修改</a></li>
+                <li class="btn"><a href="">搜尋</a></li>
+                <li class="btn"><a href="">刪除</a></li>
+                <li class="btn"><a href="">存檔</a></li>
+                <li class="btn"><a href="">列印</a></li>
+                <li class="btn"><a href="">離開</a></li>
+            </ul>
+        </nav>
+        <main class="main-content">
+            <header>
+                <div class="vastar-header">
+                    <img src="statics/img/vastar_logo.png" alt="飛騰家電Logo">
+                    <div class="vastar-title">
+                        <span class="title">廣南國際有限公司</span>
+                        <span class="title_en">Vastar International Corporation</span>
+                    </div>
+                </div>
+            </header>
+            <form action="#">
+                <div class="from first">
+                    <div class="details personnal">
+                        <span class="title">客戶詳細資料</span>
+
+                        <div class="fields">
+
+                            <div class="input-fields">
+                                <label for="">客戶代號</label>
+                                <input type="text" placeholder="">
+                            </div>
+
+                            <div class="input-fields">
+                                <label for="">客戶名稱</label>
+                                <input type="text" placeholder="">
+                            </div>
+
+                            <div class="input-fields">
+                                <label for="">稱謂</label>
+                                <input type="text" placeholder="">
+                            </div>
+
+                            <div class="input-fields">
+                                <label for="">發票抬頭</label>
+                                <input type="text">
+                            </div>
+
+                            <div class="input-fields">
+                                <label for="">統一編號</label>
+                                <input type="text">
+                            </div>
+
+                            <div class="input-fields">
+                                <label for="">出生日期</label>
+                                <input type="date">
+                            </div>
+
+                            <div class="input-fields">
+                                <label for="">電話</label>
+                                <input type="text">
+                            </div>
+
+                            <div class="input-fields">
+                                <label for="">手機1</label>
+                                <input type="text">
+                            </div>
+
+                            <div class="input-fields">
+                                <label for="">手機2</label>
+                                <input type="text">
+                            </div>
+
+                            <div class="input-fields">
+                                <label for="">公司電話</label>
+                                <input type="text">
+                            </div>
+
+                            <div class="input-fields">
+                                <label for="">LineID</label>
+                                <input type="text">
+                            </div>
+
+                            <div class="input-fields input-width-checkbox">
+                                <label for="care_object">關懷戶</label>
+                                <input type="checkbox" id="care_object">
+                            </div>
+
+                            <div class="input-fields span-12">
+                                <label for="">關懷說明</label>
+                                <input type="text">
+                            </div>
+
+                            <div class="input-fields">
+                                <label for="">郵遞區號</label>
+                                <input type="text">
+                            </div>
+                            <div class="input-fields">
+                                <label for="" class="hidden">郵遞區號-2</label>
+                                <input type="text">
+                            </div>
+                            <div class="input-fields">
+                                <label for="" class="hidden">郵遞區號-3</label>
+                                <input type="text">
+                            </div>
+
+                            <div class="input-fields span-12">
+                                <label for="">地址</label>
+                                <input type="text">
+                            </div>
+
+                            <div class="input-fields span-12">
+                                <label for="">Email</label>
+                                <input type="text">
+                            </div>
+
+                            <div class="input-fields span-12">
+                                <label for="">備註欄</label>
+                                <input type="text">
+                            </div>
+                        </div>
+                        <div class="some-btn">
+                            <button type="button" class="nextBtn" id="customer_insert">
+                                <i class='bx bxs-file-plus'></i>
+                            </button>
+    
+                            <button type="button" class="nextBtn" id="insert_cancel">
+                                <i class='bx bx-x-circle'></i>
+                            </button>
+
+                            <button type="button" class="nextBtn" id="customer_save">
+                                <i class='bx bx-save' ></i>
+                            </button>
+    
+                            <button type="button" class="nextBtn" id="customer_query">
+                                <i class='bx bx-search'></i>
+                            </button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </form>
+
+            <section class="middle table-container">
+                <div class="customer-table">
+                    <h2>客戶資料</h2>
+                    <table id="customer_table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>客戶代號</th>
+                                <th>客戶名稱</th>
+                                <th>稱謂</th>
+                                <th>發票抬頭</th>
+                                <th>統一編號</th>
+                                <th>出生日期</th>
+                                <th>電話</th>
+                                <th>手機1</th>
+                                <th>手機2</th>
+                                <th>公司電話</th>
+                                <th>LINE ID</th>
+                                <th>關懷戶</th>
+                                <th>關懷說明</th>
+                                <th>郵遞區號</th>
+                                <th>地址</th>
+                                <th>EMAIL</th>
+                                <th>備註欄</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+            <section class="middle table-container">
+                <div class="customer-table">
+                    <h2>收貨人地址</h2>
+                    <table id="receiver_table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>收件人編號</th>
+                                <th>收件人名稱</th>
+                                <th>收件人電話</th>
+                                <th>收件人手機</th>
+                                <th>郵遞區號</th>
+                                <th>地址</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+            
+        </main>
+    </div>
+    <script type="text/javascript">
+        window.addEventListener("DOMContentLoaded", () => {
+            const customer_query = document.getElementById("customer_query"); // get btn node
+            customer_query.addEventListener("click", openCustomerQuery, false);
+
+            const customer_table = document.getElementById("customer_table");
+            customer_table_tbody_list = customer_table.getElementsByTagName("tbody");
+            customer_table_tbody = customer_table_tbody_list[0] ; // 獲得customer_table_tbody節點
+            // console.log(receiver_table_tbody);
+            // 上面客戶詳細資料一進去先鎖起來
+            const customer_input_list = document.getElementsByTagName("input");
+            for(let i=0; i<customer_input_list.length; i++){
+                customer_input_list[i].disabled = true;
+                customer_input_list[i].style.opacity = "0.5";
+            }
+            const customer_insert = document.getElementById("customer_insert");
+            const insert_cancel = document.getElementById("insert_cancel");
+            const customer_save = document.getElementById("customer_save");
+            customer_save.disabled = true;
+
+            customer_insert.addEventListener("click", ()=>{
+                // background:#000;
+                // color:#fff;
+                // border: none;
+                // 先變更按鈕的狀態
+                customer_insert.style.background = "#000";
+                customer_insert.style.color = "#fff";
+                customer_insert.style.border = "none";
+
+                insert_cancel.style.background ="red"
+                insert_cancel.style.color = "#fff";
+                insert_cancel.style.border = "none";
+
+                customer_save.style.background ="green";
+                customer_save.style.color ="#fff";
+                customer_save.style.border ="none";
+                customer_save.disabled = false;
+
+                for(let i=0; i<customer_input_list.length; i++){
+                customer_input_list[i].disabled = false;
+                customer_input_list[i].style.opacity = "1";
+            }
+            }, false);
+
+            customer_save.addEventListener("click", customerInsert, false);
+
+            insert_cancel.addEventListener("click", ()=>{
+
+                insert_cancel.style.background ="none"
+                insert_cancel.style.color = "#000";
+                insert_cancel.style.border = "1px solid #000";
+
+                customer_insert.style.background = "none";
+                customer_insert.style.color = "#000";
+                customer_insert.style.border = "1px solid #000";
+
+                customer_save.style.background ="none";
+                customer_save.style.color ="#000";
+                customer_save.style.border ="1px solid #000";
+                customer_save.disabled = true;
+
+                for(let i=0; i<customer_input_list.length; i++){
+                customer_input_list[i].disabled = true;
+                customer_input_list[i].style.opacity = "0.5";
+            }
+            }, false);
+            
+        }, false);
+
+        // 獲取上方客戶詳細資料的節點
+        const customer_input_list = document.getElementsByTagName("input");
+        console.log(customer_input_list);
+        
+        function openCustomerQuery(){
+            let my_customer_query_page = window.open("customer_query.html", "_blank" , "width=400,height=500");
+            my_customer_query_page.moveTo(600, 280);
+        }
+        function customerInsert() {
+                if (checkCustomerInsertData()) {
+                    let care_object = "N"; // 關懷戶預設為未勾選
+                    let district = "";
+                    // 檢查資料的正確性
+                    for (let i = 1; i < customer_input_list.length; i++) {
+                        if (i === 11) {
+                            // 特別將關懷戶分別出來
+                            console.log(i, customer_input_list[i].checked);
+                            if (customer_input_list[i].checked == true) {
+                                // 處理關懷戶
+                                care_object = "Y";
+                            }
+                        } else {
+                            if (customer_input_list[i].value === null ||
+                                customer_input_list[i].value === undefined ||
+                                customer_input_list[i].value === "") {
+                                customer_input_list[i].value === "";
+                            } else if (i === 13 || i === 14 || i === 15) {
+                                district += customer_input_list[i].value;
+                            }
+                        }
+                    }
+                    console.log(care_object, "care_object");
+
+                    //POST請求 登入範例
+                    axios.defaults.headers.post["Content-Type"] = "application/json;charset=utf-8";
+                    axios.post('https://webapi.vastar.com.tw/erpapi/api/Customer/Insert', {
+                        UserID: 'vastar',
+                        Password: 'vastar@2673',
+                        Name: customer_input_list[1].value,
+                        Title: customer_input_list[2].value,
+                        InvoiceId: customer_input_list[4].value,
+                        InvoiceName: customer_input_list[3].value,
+                        Mobile_Phone_No_1: customer_input_list[7].value,
+                        Mobile_Phone_No_2: customer_input_list[8].value,
+                        Phone_No: customer_input_list[6].value,
+                        Company_Phone_No: customer_input_list[9].value,
+                        Line_Id: customer_input_list[10].value,
+                        Care: care_object,
+                        Care_Remark: customer_input_list[12].value,
+                        District: district,
+                        Address: customer_input_list[16].value,
+                        Email: customer_input_list[17].value,
+                        Remark: customer_input_list[18].value,
+                        Birthday: customer_input_list[5].value
+                    })
+                        .then((response) => {
+                            console.log(response);
+                            console.log(response.data.length);
+                            if (response.data.Result == 0) {
+                                Toast.show(response.data.Message, "success");
+                                window.location = location ;
+                            } else {
+                                Toast.show(response.data.Message, "error");
+                            }
+                        })
+                        .catch((error) => console.log(error));
+                }
+            }
+        function checkCustomerInsertData(){
+            let check = 0;
+            let message = "";
+            if(customer_input_list[1].value == ""){
+                check++;
+                message += "客戶名稱沒有資料 "
+            }
+            if(customer_input_list[5].value == ""){
+                check++;
+                message += "出生日期沒有資料 "
+            }
+            if(customer_input_list[6].value == "" &&
+            customer_input_list[7].value == "" &&
+            customer_input_list[8].value == "" 
+            ){
+                check++;
+                message += "電話,手機1,手機2沒有資料"
+            }
+            if(customer_input_list[16].value == ""){
+                check++;
+                message += "地址沒有資料 "
+            }
+            if(check > 0){
+                Toast.alert(`${message}`);
+                return false;
+            }else{
+                return true;
+            }
+        }
+    </script>
+</body>
+</html>

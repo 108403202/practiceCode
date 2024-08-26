@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS files -->
+    <link rel="stylesheet" href="statics/css/customer_query.css">
+    <!-- toast messge CSS, JS -->
+    <link href="statics\css\toast.css" rel="stylesheet">
+    <script src="js\toast.js"></script>
+    <!-- widget.js 日期相關方法, Cookie相關方法, 補0到4碼方法-->
+    <script src="js\widget.js"></script>
+    <!-- axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <title>客戶主檔搜尋設定</title>
+</head>
+
+<body>
+    <div class="container">
+        <form action="#">
+            <div class="query-form">
+                <span class="title">客戶主檔搜尋設定</span>
+
+                <div class="fields">
+                    <div class="input-fields">
+                        <label for="" class="info">客戶編號</label>
+                        <input type="text"  id="Customer_No">
+                    </div>
+                    <div class="input-fields">
+                        <label for="" class="info">客戶名稱</label>
+                        <input type="text"  id="Name"> 
+                    </div>
+                    <div class="input-fields">
+                        <label for="" class="info">電話</label>
+                        <input type="text"  id="Phone_No">
+                    </div>
+                    <div class="input-fields">
+                        <label for="" class="info">手機1</label>
+                        <input type="text"  id="Mobile_Phone_No_1">
+                    </div>
+                    <div class="input-fields">
+                        <label for="" class="info">公司電話</label>
+                        <input type="text"  id="Company_Phone_No">
+                    </div>
+                    <div class="input-fields">
+                        <label for="" class="info">LINE ID</label>
+                        <input type="text"  id="Line_Id">
+                    </div>
+                    <div class="input-fields span-12">
+                        <label for="" class="info">地址</label>
+                        <input type="text"  id="Address">
+                    </div>
+                    <div class="input-fields span-12">
+                        <label for="" class="info">EMAIL</label>
+                        <input type="text"  id="Email">
+                    </div>
+                </div>
+
+                <div class="someBtn">
+
+                    <button type="reset" class="nextBtn">
+                        <span class="btnText">清除</span>
+                    </button>
+
+                    <button type="button" class="nextBtn" id="query">
+                        <span class="btnText">確定</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            const query = document.getElementById("query");
+            query.addEventListener("click", customerQuery, false);
+        }, false);
+        const customer_tb = window.opener.document.getElementById("customer_table"); // 獲取 客戶資料表格節點
+        // console.log("客戶資料表格節點: ", order_tb);
+        const customer_tb_tbody_list = customer_tb.getElementsByTagName("tbody"); // 獲取 客戶資料表格 tbody 節點串列
+        // console.log(order_tb_tbody_list);
+        const customer_tb_tbody = customer_tb_tbody_list[0]; // 獲取 客戶資料表格 tbody 節點
+        console.log(customer_tb_tbody);
+
+        //填入之前先把客戶資料的表格清空
+        function TabDelete() {
+            let tbody_childlist = customer_tb_tbody.getElementsByTagName("tr");
+            let rows = tbody_childlist.length;
+            if (rows >= 1) {
+                for (i = rows - 1; i >= 0; i--) {
+                    customer_tb_tbody.removeChild(tbody_childlist[i]);
+                    console.log(i);
+                }
+            }
+            console.log(tbody_childlist);
+        }
+        function Select(e){ 
+            //alert("You click the table! ");
+            let target = e.target; //觸發事件的原件節點
+            let tr = target.parentNode; // 觸發事件的原件節點的父節點, 其實也就是你點選的那一列 的 列節點
+            console.log(tr);
+            let td_list = tr.getElementsByTagName('td'); // 獲取列節點的子節點, 會獲得td節點list
+            console.log(td_list); 
+
+            // const id = document.getElementById('Customer_No');
+            // const name = document.getElementById('Customer_Name');
+            // id.value = td_list[1].innerHTML;
+            // name.value = td_list[2].innerHTML;
+            
+        }
+        // 客戶資料查詢api
+        function customerQuery() {
+            TabDelete();
+            /* step1. 獲得使用者輸入的客戶主檔搜尋設定     */
+            const no = document.getElementById("Customer_No");
+            const name = document.getElementById("Name");
+            const phone_no = document.getElementById("Phone_No");
+            const mobile_phone_no_1 = document.getElementById("Mobile_Phone_No_1");
+            const company_phone_no = document.getElementById("Company_Phone_No");
+            const line_id = document.getElementById("Line_Id");
+            const address = document.getElementById("Address");
+            const email = document.getElementById("Email");
+
+            // step2 檢查使用者的輸入, 
+            if (
+                no.value == null ||
+                no.value == undefined ||
+                no.value == ""
+            ) {
+                no.value = "";
+                
+            }
+            console.log(no.value); 
+            if (
+                name.value == null ||
+                name.value == undefined ||
+                name.value == ""
+            ) {
+                name.value = ""; 
+                
+            }
+            console.log(name.value); 
+            if (
+                phone_no.value == null ||
+                phone_no.value == undefined ||
+                phone_no.value == ""
+            ) {
+                phone_no.value = "";
+                
+            }
+            console.log(phone_no.value); 
+            if (
+                mobile_phone_no_1.value == null ||
+                mobile_phone_no_1.value == undefined ||
+                mobile_phone_no_1.value == ""
+            ) {
+                mobile_phone_no_1.value = ""; 
+                
+            }
+            console.log(mobile_phone_no_1.value); 
+            if (
+                company_phone_no.value == null ||
+                company_phone_no.value == undefined ||
+                company_phone_no.value == ""
+            ) {
+                company_phone_no.value = ""; 
+                
+            }
+            console.log(company_phone_no.value); 
+            if (
+                line_id.value == null ||
+                line_id.value == undefined ||
+                line_id.value == ""
+            ) {
+                line_id.value = "";
+                
+            }
+            console.log(line_id.value); 
+            if (
+                address.value == null ||
+                address.value == undefined ||
+                address.value == ""
+            ) {
+                address.value = "";
+                
+            }
+            console.log(address.value); 
+            if (
+                email.value == null ||
+                email.value == undefined ||
+                email.value == ""
+            ) {
+                email.value = "";
+            }
+            console.log(email.value); 
+
+            let user_no = getCookie("User_No");
+            console.log(user_no);
+            //POST請求
+            axios.defaults.headers.post["Content-Type"] =
+                "application/json;charset=utf-8";
+            axios
+                .post("https://webapi.vastar.com.tw/erpapi/api/Customer/Query", {
+                    UserID: "vastar",
+                    Password: "vastar@2673",
+                    User_No: user_no,
+                    Customer_No: no.value,
+                    Name: name.value,
+                    Phone_No: phone_no.value,
+                    Mobile_Phone_No_1: mobile_phone_no_1.value,
+                    Company_Phone_No: company_phone_no.value,
+                    Line_Id: line_id.value,
+                    Address: address.value,
+                    Email: email.value,
+                    FuzzySearch: ""
+                })
+                .then((response) => {
+                    console.log(response);
+                    console.log("從api獲得的客戶資料筆數: ", response.data.length);
+                    if (response.data[0].Result == -1) {
+                        // 如果沒有找到客戶資料
+                        console.log(response.data[0].Message);
+                        Toast.alert(`${response.data[0].Message}`, "error");
+                    } else if (response.data[0].Result == 0) {
+                        console.log(response.data);
+                        Toast.show("查詢客戶資料成功! ", "success");
+                        /*根據得到的response動態增加頁面下方的動態資料表格*/
+                        // 先增加列 -> 欄位 -> 節點
+                        for (let i = 0; i < response.data.length; i++) {
+                            let tr = document.createElement("tr");
+                            let td1 = document.createElement("td");
+                            let td2 = document.createElement("td");
+                            let td3 = document.createElement("td");
+                            let td4 = document.createElement("td");
+                            let td5 = document.createElement("td");
+                            let td6 = document.createElement("td");
+                            let td7 = document.createElement("td");
+                            let td8 = document.createElement("td");
+                            let td9 = document.createElement("td");
+                            let td10 = document.createElement("td");
+                            let td11 = document.createElement("td");
+                            let td12 = document.createElement("td");
+                            let td13 = document.createElement("td");
+                            let td14 = document.createElement("td");
+                            let td15 = document.createElement("td");
+                            let td16 = document.createElement("td");
+                            let td17 = document.createElement("td");
+                            let td18 = document.createElement("td");
+
+                            let text1 = document.createTextNode(i + 1);
+                            let text2 = document.createTextNode(response.data[i].Customer_No);
+                            let text3 = document.createTextNode(response.data[i].Name); // 承購人代號
+                            let text4 = document.createTextNode(response.data[i].Title); //備註欄
+                            let text5 = document.createTextNode(response.data[i].InvoiceName); //承購人姓名
+                            let text6 = document.createTextNode(response.data[i].InvoiceId); // 聯絡電話
+                            let text7 = document.createTextNode(response.data[i].Birthday); //手機
+                            let text8 = document.createTextNode(response.data[i].Phone_No); //銷售地點名稱
+                            let text9 = document.createTextNode(response.data[i].Mobile_Phone_No_1); //銷售人員姓名
+                            let text10 = document.createTextNode(response.data[i].Mobile_Phone_No_2); //製單人員姓名
+                            let text11 = document.createTextNode(response.data[i].Company_Phone_No); //銷售日期起
+                            let text12 = document.createTextNode(response.data[i].Line_Id); //銷售日期迄
+                            let text13 = document.createTextNode(response.data[i].Care); //產品名稱
+                            let text14 = document.createTextNode(response.data[i].Care_Remark); //產品型號
+                            let text15 = document.createTextNode(response.data[i].District); //銷售金額
+                            let text16 = document.createTextNode(response.data[i].Address); //地址
+                            let text17 = document.createTextNode(response.data[i].Email); //關懷戶
+                            let text18 = document.createTextNode(response.data[i].Remark); //關懷說明
+                            
+
+                            td1.appendChild(text1);
+                            td2.appendChild(text2);
+                            td3.appendChild(text3);
+                            td4.appendChild(text4);
+                            td5.appendChild(text5);
+                            td6.appendChild(text6);
+                            td7.appendChild(text7);
+                            td8.appendChild(text8);
+                            td9.appendChild(text9);
+                            td10.appendChild(text10);
+                            td11.appendChild(text11);
+                            td12.appendChild(text12);
+                            td13.appendChild(text13);
+                            td14.appendChild(text14);
+                            td15.appendChild(text15);
+                            td16.appendChild(text16);
+                            td17.appendChild(text17);
+                            td18.appendChild(text18);
+
+                            tr.appendChild(td1);
+                            tr.appendChild(td2);
+                            tr.appendChild(td3);
+                            tr.appendChild(td4);
+                            tr.appendChild(td5);
+                            tr.appendChild(td6);
+                            tr.appendChild(td7);
+                            tr.appendChild(td8);
+                            tr.appendChild(td9);
+                            tr.appendChild(td10);
+                            tr.appendChild(td11);
+                            tr.appendChild(td12);
+                            tr.appendChild(td13);
+                            tr.appendChild(td14);
+                            tr.appendChild(td15);
+                            tr.appendChild(td16);
+                            tr.appendChild(td17);
+                            tr.appendChild(td18);
+
+                            customer_tb_tbody.appendChild(tr);
+                            // tr.addEventListener("click", Select, false);
+                            // tr.addEventListener('click', salesTabClear, false);  // 為表格列添加事件, 清除表格
+                            // tr.addEventListener("click", orderSelect, false); // 為表格列添加事件, 選擇表格
+                            // tr.addEventListener('dblclick', orderConfirm, false);  // 為表格列添加事件, 確認
+                        }
+                        
+                        window.close();
+                    }
+                })
+                .catch((error) => console.log(error));
+        }
+
+    </script>
+</body>
+
+</html>

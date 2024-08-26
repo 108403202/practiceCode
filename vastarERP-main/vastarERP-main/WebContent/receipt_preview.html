@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>發票預覽</title>
+    <meta charset="UTF-8">
+    <link href="statics\css\receipt_preview.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="button-group">
+        <input type="button" name="print" class="query-btn" value="列印" onclick="openPurchaser()" />
+        <input type="button" name="pritn_with_format" class="query-btn" value="套表列印" onclick="openPurchaser()" />
+    </div>
+    <div class="panel-group">
+        <input type="radio" name="panel-radio" id="radio1" class="panel-control" checked>
+        <input type="radio" name="panel-radio" id="radio2" class="panel-control">
+        <div class="tab-group">
+            <label for="radio1" class="active">二聯式</label>
+            <label for="radio2">三聯式</label>
+        </div>
+        <div class="content-group">
+            <div class="content content1">
+                <div class="part-1">
+                    <div class="title">統一發票(二聯式)</div>
+                    <div><span contenteditable="true">一一二年五、六月份</span></div>
+                    <div class="Year-of-the-Republic-of-China"><span>中華民國</span><span>年</span></div>
+                    <div class="purchaser">買受人:</div>
+                    <div class="address">
+                        <span class="address-title">地址:</span>
+                        <span class="full-address">
+                            <span>縣市</span>
+                            <span>鄉鎮市區</span>
+                            <span>段</span>
+                            <span>巷</span>
+                            <span>弄</span>
+                            <span>號</span>
+                            <span>樓</span>
+                            <span>室</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="part-2">
+                        <table class="merchandise-table"> 
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>數量</th>
+                                    <th>單價</th>
+                                    <th>金額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    <table class="remark-table">
+                        <thead>
+                            <tr>
+                                <th>備註</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td id="remark-content" contenteditable="true"></td></tr>
+                            <tr><td id="seal-title">營業人蓋用統一發票專用</td></tr>
+                            <tr><td id="seal-content" contenteditable="true"></td></tr>
+                        </tbody>
+                    </table>
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th colspan="3">總計</th>
+                                <th colspan="4" contenteditable="true" style="text-align:right;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="sum-ntd" colspan="7" style="font-size:10px;">
+                                    <div>總計新台幣</div>
+                                    <span>(中文大寫)</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>營業稅</td>
+                                <td>應稅</td>
+                                <td contenteditable="true" class="input"></td>
+                                <td>零稅率</td>
+                                <td contenteditable="true" class="input"></td>
+                                <td>免稅</td>
+                                <td contenteditable="true" class="input"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="content content2">
+                <div class="part-1">
+                    <div class="title">統一發票(二聯式)</div>
+                    <div><span contenteditable="true">一一二年五、六月份</span></div>
+                    <div class="Year-of-the-Republic-of-China"><span>中華民國</span><span>年</span></div>
+                    <div class="purchaser">買受人:</div>
+                    <div class="address">
+                        <span class="address-title">地址:</span>
+                        <span class="full-address">
+                            <span>縣市</span>
+                            <span>鄉鎮市區</span>
+                            <span>段</span>
+                            <span>巷</span>
+                            <span>弄</span>
+                            <span>號</span>
+                            <span>樓</span>
+                            <span>室</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="part-2">
+                        <table class="merchandise-table"> 
+                            <thead>
+                                <tr>
+                                    <th>品名</th>
+                                    <th>數量</th>
+                                    <th>單價</th>
+                                    <th>金額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    <table class="remark-table">
+                        <thead>
+                            <tr>
+                                <th>備註</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td id="remark-content" contenteditable="true"></td></tr>
+                            <tr><td id="seal-title">營業人蓋用統一發票專用</td></tr>
+                            <tr><td id="seal-content" contenteditable="true"></td></tr>
+                        </tbody>
+                    </table>
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th colspan="5">銷售額總計</th>
+                                <th colspan="2" contenteditable="true" style="text-align:right;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr >
+                                <td rowspan="2" colspan="2">營業稅</td>
+                                <td>應稅</td>
+                                <td>零稅率</td>
+                                <td>免稅</td>
+                                <td contenteditable="true" rowspan="2" colspan="2" style="width:30px; text-align:right;"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true" class="input">V</td>
+                                <td contenteditable="true" class="input"></td>
+                                <td contenteditable="true" class="input"></td>
+                            </tr>
+                            <tr>
+                                <td id="sum-ntd" colspan="7" style="font-size:10px;">
+                                    <div >總計新台幣</div>
+                                    <span>(中文大寫)</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>

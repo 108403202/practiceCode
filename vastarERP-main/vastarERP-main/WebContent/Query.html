@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>銷售憑單搜尋</title>
+    <link rel="stylesheet" href="statics/css/query.css" />
+    <!-- 相關js  -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/widget.js"></script>
+    <!--小工具類js function -->
+    <!-- toast messge CSS, JS -->
+    <link href="statics\css\toast.css" rel="stylesheet" />
+    <script src="js\toast.js"></script>
+  </head>
+  <body>
+    <main class="container">
+      <section class="top">
+        <div class="query-criteria">
+          <div class="row">
+            <div class="input-box">
+              <span class="info">單號</span>
+              <input type="text" id="Order_No" />
+            </div>
+            <div class="input-box">
+              <span class="info">銷售日期起</span>
+              <input type="date" id="Order_Date_1" />
+            </div>
+            <div class="input-box">
+              <span class="info">銷售日期迄</span>
+              <input type="date" id="Order_Date_2" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-box">
+              <span class="info">承購人</span>
+              <input type="text" id="Customer_Name" />
+            </div>
+            <div class="input-box">
+              <span class="info">銷貨地點</span>
+              <input type="text" />
+            </div>
+            <div class="input-box">
+              <span class="info">產品名稱</span>
+              <input type="text" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-box">
+              <span class="info">聯絡電話</span>
+              <input type="text" />
+            </div>
+            <div class="input-box">
+              <span class="info">銷售人員</span>
+              <input type="text" />
+            </div>
+            <div class="input-box">
+              <span class="info">產品型號</span>
+              <input type="text" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-box">
+              <span class="info">手機</span>
+              <input type="text" />
+            </div>
+            <div class="input-box">
+              <span class="info">製單人員</span>
+              <input type="text" />
+            </div>
+            <div class="input-box">
+              <span class="info">銷售金額起</span>
+              <input type="text" />
+            </div>
+          </div>
+          <div class="row two">
+            <div class="input-box">
+              <span class="info">地址</span>
+              <input type="text" />
+            </div>
+            <div class="input-box">
+              <span class="info">銷售金額迄</span>
+              <input type="text" />
+            </div>
+            <div class="input-box vis-hidden">
+              <span class="info">隱藏元素</span>
+            </div>
+          </div>
+        </div>
+        <div class="tool">
+          <img
+            src="statics/img/search-interface-symbol.png"
+            alt="client"
+            class="search"
+            id="search"
+          />
+          <img
+            src="statics/img/printer.png"
+            alt="client"
+            class="printer"
+            id="printer"
+          />
+          <img src="statics/img/exit.png" alt="client" class="exit" id="exit" />
+          <img
+            src="statics/img/excel.png"
+            alt="client"
+            class="excel"
+            id="excel"
+          />
+          <img src="statics/img/word.png" alt="client" class="word" id="word" />
+          <img
+            src="statics/img/client.png"
+            alt="client"
+            class="client"
+            id="client"
+          />
+          <div class="row">
+            <div class="input-box">
+              <label for="care"
+                ><input type="checkbox" id="care" />關懷戶</label
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="middle table-container">
+        <div class="order-table">
+          <h2>銷售憑單</h2>
+          <table id="approve_table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>單號</th>
+                <th>承購人代號</th>
+                <th>承購人姓名</th>
+                <th>連絡電話</th>
+                <th>手機</th>
+                <th>銷售地點</th>
+                <th>銷售人員</th>
+                <th>製單人員</th>
+                <th>銷售日期起</th>
+                <th>銷售日期迄</th>
+                <th>產品名稱</th>
+                <th>產品型號</th>
+                <th>銷售金額</th>
+                <th>地址</th>
+                <th>關懷戶</th>
+                <th>關懷說明</th>
+                <th>備註欄</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="middle table-container">
+        <div class="order-table">
+          <h2>銷售明細</h2>
+          <table id="orderdetail_table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>銷售日期</th>
+                <th>產品名稱</th>
+                <th>銷售數量</th>
+                <th>銷售金額</th>
+                <th>收貨人名稱</th>
+                <th>銷售別</th>
+                <th>收貨人電話</th>
+                <th>收貨人地址</th>
+                <th>產品條碼</th>
+                <th>單號</th>
+                <th>銷售地點</th>
+                <th>銷售人員</th>
+                <th>製單人員</th>
+                <th>備註欄</th>
+                <th>維修紀錄</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+    <script>
+      const order_tb = document.getElementById("approve_table"); // 獲取 銷貨憑單表格節點
+      // console.log("銷貨憑單表格節點: ", order_tb);
+      const order_tb_tbody_list = order_tb.getElementsByTagName("tbody"); // 獲取 銷貨憑單表格 tbody 節點串列
+      // console.log(order_tb_tbody_list);
+      const order_tb_tbody = order_tb_tbody_list[0]; // 獲取 銷貨憑單表格 tbody 節點
+
+      const order_detail_tb = document.getElementById("orderdetail_table"); // 獲取 銷貨明細表格節點
+      // console.log("銷貨憑單表格節點: ", order_tb);
+      const order_detail_tb_tbody_list =
+        order_detail_tb.getElementsByTagName("tbody"); // 獲取 銷貨憑單明細 tbody 節點串列
+      // console.log(order_tb_tbody_list);
+      const order_detail_tb_tbody = order_detail_tb_tbody_list[0]; // 獲取 銷貨明細表格 tbody 節點
+
+      console.log("銷貨憑單表格的tbody節點: ", order_tb_tbody);
+
+      Order_Date_1.value = returnToday();
+      Order_Date_2.value = returnToday();
+
+      imgSearch();
+      imgExit();
+
+      // add a function to search picture
+      function imgSearch() {
+        const search = document.getElementById("search");
+        console.log(search);
+        search.addEventListener(
+          "click",
+          () => {
+            OrderQuery();
+            salesTabDelete();
+          },
+          false
+        );
+      }
+      // add a function to exit picture
+      function imgExit() {
+        const exit = document.getElementById("exit");
+        exit.addEventListener(
+          "click",
+          () => {
+            window.close();
+          },
+          false
+        );
+      }
+      // add a function to client picture
+      function imgClient() {
+        const client = document.getElementById("client");
+        client.addEventListener(
+          "click",
+          () => {
+            // do nothing
+          },
+          false
+        );
+      }
+
+      //填入之前先把銷售憑單的表格清空
+      function salesTabDelete() {
+        let tbody_childlist = order_tb_tbody.getElementsByTagName("tr");
+        let rows = tbody_childlist.length;
+        if (rows >= 1) {
+          for (i = rows - 1; i >= 0; i--) {
+            order_tb_tbody.removeChild(tbody_childlist[i]);
+            console.log(i);
+          }
+        }
+        console.log(tbody_childlist);
+      }
+
+      function salesdetailDelete() {
+        for (i = 1; i < 11; i++) {
+          for (j = 1; j < 15; j++) {
+            order_detail_tb.rows[i].cells[j].innerHTML = "";
+          }
+        }
+      }
+
+      // 銷貨憑單查詢api
+      function OrderQuery() {
+        /* step1. 從api獲得員工資料     */
+        OrderNo = document.getElementById("Order_No");
+        OrderDate_1 = document.getElementById("Order_Date_1");
+        OrderDate_2 = document.getElementById("Order_Date_2");
+        // console.log("單號: ", OrderNo ,"日期起: ", OrderDate_1.value, "日期迄: ", OrderDate_2.value);
+
+        if (
+          OrderNo.value == null ||
+          OrderNo.value == undefined ||
+          OrderNo.value == ""
+        ) {
+          // console.log("單號為空");
+          OrderNo.value = ""; // 單號為空, 將單號設定為空字串
+        } else {
+          // console.log("單號為: ", OrderNo.value);
+        }
+
+        if (
+          OrderDate_1.value == null ||
+          OrderDate_1.value == undefined ||
+          OrderDate_1.value == ""
+        ) {
+          // console.log('日期起為空');
+          OrderDate_1.value = returnToday();
+          // console.log(OrderDate_1.value);
+        } else {
+          // console.log('日期起為: ', OrderDate_1.value);
+        }
+
+        if (
+          OrderDate_2.value == null ||
+          OrderDate_2.value == undefined ||
+          OrderDate_2.value == ""
+        ) {
+          // console.log('日期迄為空');
+          OrderDate_2.value = returnToday();
+          // console.log(OrderDate_2.value);
+        } else {
+          // console.log('日期迄: ', OrderDate_2.value);
+        }
+
+        //POST請求
+        axios.defaults.headers.post["Content-Type"] =
+          "application/json;charset=utf-8";
+        axios
+          .post("https://webapi.vastar.com.tw/erpapi/api/Order/Query", {
+            UserID: "vastar",
+            Password: "vastar@2673",
+            Order_No: OrderNo.value,
+            Order_Date_1: OrderDate_1.value,
+            Order_Date_2: OrderDate_2.value,
+          })
+          .then((response) => {
+            console.log(response);
+            console.log("從api獲得的銷貨憑單資料筆數: ", response.data.length);
+            if (response.data[0].Result == -1) {
+              // 如果沒有找到銷貨憑單
+              console.log(response.data[0].Message);
+              Toast.alert(`${response.data[0].Message}`, "error");
+            } else if (response.data[0].Result == 0) {
+              console.log(response.data);
+              Toast.show("查詢銷貨單成功! ", "success");
+              /*根據得到的response動態增加頁面下方的動態資料表格*/
+              // 先增加列 -> 欄位 -> 節點
+              for (let i = 0; i < response.data.length; i++) {
+                let tr = document.createElement("tr");
+                let td1 = document.createElement("td");
+                let td2 = document.createElement("td");
+                let td3 = document.createElement("td");
+                let td4 = document.createElement("td");
+                let td5 = document.createElement("td");
+                let td6 = document.createElement("td");
+                let td7 = document.createElement("td");
+                let td8 = document.createElement("td");
+                let td9 = document.createElement("td");
+                let td10 = document.createElement("td");
+                let td11 = document.createElement("td");
+                let td12 = document.createElement("td");
+                let td13 = document.createElement("td");
+                let td14 = document.createElement("td");
+                let td15 = document.createElement("td");
+                let td16 = document.createElement("td");
+                let td17 = document.createElement("td");
+                let td18 = document.createElement("td");
+
+                let text1 = document.createTextNode(i + 1);
+                let text2 = document.createTextNode(response.data[i].Order_No);
+                let text3 = document.createTextNode(
+                  response.data[i].Customer_No
+                ); // 承購人代號
+                let text4 = document.createTextNode(
+                  response.data[i].Customer_Name
+                ); //承購人姓名
+                let text5 = document.createTextNode(response.data[i].Phone_No); // 聯絡電話
+                let text6 = document.createTextNode(
+                  response.data[i].Mobile_Phone_No_1
+                ); //手機
+                let text7 = document.createTextNode(
+                  response.data[i].Place_Name
+                ); //銷售地點名稱
+                let text8 = document.createTextNode(
+                  response.data[i].Sales_Name
+                ); //銷售人員姓名
+                let text9 = document.createTextNode(
+                  response.data[i].Create_Name
+                ); //製單人員姓名
+                let text10 = document.createTextNode(
+                  response.data[i].Create_Date
+                ); //銷售日期起
+                let text11 = document.createTextNode(
+                  response.data[i].Create_Date
+                ); //銷售日期迄
+                let text12 = document.createTextNode(""); //產品名稱
+                let text13 = document.createTextNode(""); //產品型號
+                let text14 = document.createTextNode(""); //銷售金額
+                let text15 = document.createTextNode(""); //地址
+                let text16 = document.createTextNode(""); //關懷戶
+                let text17 = document.createTextNode(""); //關懷說明
+                let text18 = document.createTextNode(""); //備註欄
+
+                td1.appendChild(text1);
+                td2.appendChild(text2);
+                td3.appendChild(text3);
+                td4.appendChild(text4);
+                td5.appendChild(text5);
+                td6.appendChild(text6);
+                td7.appendChild(text7);
+                td8.appendChild(text8);
+                td9.appendChild(text9);
+                td10.appendChild(text10);
+                td11.appendChild(text11);
+                td12.appendChild(text12);
+                td13.appendChild(text13);
+                td14.appendChild(text14);
+                td15.appendChild(text15);
+                td16.appendChild(text16);
+                td17.appendChild(text17);
+                td18.appendChild(text18);
+
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+                tr.appendChild(td5);
+                tr.appendChild(td6);
+                tr.appendChild(td7);
+                tr.appendChild(td8);
+                tr.appendChild(td9);
+                tr.appendChild(td10);
+                tr.appendChild(td11);
+                tr.appendChild(td12);
+                tr.appendChild(td13);
+                tr.appendChild(td14);
+                tr.appendChild(td15);
+                tr.appendChild(td16);
+                tr.appendChild(td17);
+                tr.appendChild(td18);
+
+                order_tb_tbody.appendChild(tr);
+                // tr.addEventListener('click', salesTabClear, false);  // 為表格列添加事件, 清除表格
+                tr.addEventListener("click", orderSelect, false); // 為表格列添加事件, 選擇表格
+                // tr.addEventListener('dblclick', orderConfirm, false);  // 為表格列添加事件, 確認
+              }
+            }
+          })
+          .catch((error) => console.log(error));
+      }
+      // 處理點選所要的 那一筆銷貨憑單資料 後，得到那一列的 單號和 承購人姓名, 並且自動填入到上面的空格
+      function orderSelect(e) {
+        //alert("You click the table! ");
+        let target = e.target; //觸發事件的原件節點
+        let tar1 = target.parentNode; // 觸發事件的原件節點的父節點, 其實也就是你點選的那一列 的 列節點
+        console.log(tar1);
+
+        let tar1Child = tar1.getElementsByTagName("td"); // 獲取列節點的子節點, 會獲得td節點
+        // console.log("你點選的 列 的td節點: ", tar1Child);
+
+        // let tar1Child_Child = tar1Child[0].childNodes;
+        // console.log("列 的 td節點 的子節點: ", tar1Child_Child);
+
+        // 這邊變數的 註解名稱 是以 銷貨單頁面顯示的名稱為主
+        let Order_No = tar1Child[1].innerHTML; // 單號
+        let Customer_No = tar1Child[2].innerHTML; //承購人編號
+        let Customer_Name = tar1Child[3].innerHTML; // 承購人姓名
+        let Place_Name = tar1Child[6].innerHTML; // 銷售地點
+        let Sales_Name = tar1Child[7].innerHTML; // 銷售人員姓名
+        let Create_Name = tar1Child[8].innerHTML; // 製單人員姓名
+        let Create_Date = tar1Child[9].innerHTML; // 製單日期
+        // let Customer_No = tar1Child[2].innerHTML; // 承購人編號
+        // let Customer_Name = tar1Child[4].innerHTML; // 承購人姓名
+        // let Receiver_No = tar1Child[5].innerHTML; // 收貨人編號
+        // let Receiver_Name = tar1Child[6].innerHTML; // 收貨人姓名
+        // let Place_No = tar1Child[7].innerHTML; // 銷售地點編號
+        // let Sales_No= tar1Child[9].innerHTML; // 銷售人員編號
+        // let Create_No = tar1Child[11].innerHTML; // 製單人員編號
+
+        // console.log("單號: " + Order_No + "承購人姓名:" + Customer_Name);
+
+        // 將從員工表格獲得的代碼和名字填入上面的資料中
+        const order_No = document.getElementById("Order_No");
+        const customer_Name = document.getElementById("Customer_Name");
+        // console.log(orderNo + " " + customerName);
+        order_No.value = Order_No;
+        customer_Name.value = Customer_Name;
+
+        // // 將銷貨憑單的資料填到 銷貨單頁面
+        // window.opener.document.getElementById('purchasenameid').value  = Customer_Name;
+        // window.opener.document.getElementById('receivenameid').value  = Receiver_Name;
+        // window.opener.document.getElementById('placenameid').value  = Place_Name;
+        // window.opener.document.getElementById('seller').value  = Sales_Name;
+        // window.opener.document.getElementById('making_name').value  = Create_Name;
+        // window.opener.document.getElementById('Order_No').value  = Order_No;
+        //將銷貨憑單明細填入到 銷貨單頁面
+        orderDetailQuery(
+          Order_No,
+          Place_Name,
+          Sales_Name,
+          Create_Name,
+          Create_Date
+        );
+
+        // 處理日期格式, 把從後段拿到的日期格式: yyyy/mm/dd , 轉換成 yyyy-mm-dd
+        // console.log("從後端拿到的日期字串: ", Create_Date, typeof(Create_Date));
+        // const date_arr =  Create_Date.split('/');
+        // console.log(date_arr);
+        // let date_verify = date_arr[0]; // 格式轉換成 yyyy-mm-dd的日期字串
+        // for(let i=0; i<(date_arr.length-1); i++){
+        //     date_verify += "-";
+        //     date_verify += date_arr[i+1];
+
+        // }
+        // console.log(date_verify);
+        // window.opener.document.getElementById('Order_Date_1').value  = date_verify;
+        // window.opener.document.getElementById('Order_Date_2').value  = date_verify;
+      }
+
+      function orderDetailQuery(
+        Order_No,
+        Place_Name,
+        Sales_Name,
+        Create_Name,
+        Create_Date
+      ) {
+        salesdetailDelete();
+        //POST請求
+        axios.defaults.headers.post["Content-Type"] =
+          "application/json;charset=utf-8";
+        axios
+          .post("https://webapi.vastar.com.tw/erpapi/api/OrderDetail/Query", {
+            UserID: "vastar",
+            Password: "vastar@2673",
+            Order_No: Order_No,
+          })
+          .then((response) => {
+            console.log(response);
+            console.log(
+              "從api獲得的銷貨憑單明細資料筆數: ",
+              response.data.length
+            );
+            if (response.data[0].Result == -1) {
+              // 如果沒有找到銷貨明細
+              console.log(response.data[0].Message);
+              Toast.alert(`${response.data[0].Message}`, "error");
+            } else if (response.data[0].Result == 0) {
+              console.log(response.data);
+              Toast.show("查詢銷貨明細成功! ", "success");
+              /*根據得到的response動態增加頁面下方的動態資料表格*/
+              // 先增加列 -> 欄位 -> 節點
+
+              for (let i = 0; i < response.data.length; i++) {
+                orderdetail_table.rows[i + 1].cells[1].innerHTML = Create_Date;
+                orderdetail_table.rows[i + 1].cells[2].innerHTML =
+                  response.data[i].Product_Name;
+                orderdetail_table.rows[i + 1].cells[3].innerHTML =
+                  response.data[i].Quantity;
+                orderdetail_table.rows[i + 1].cells[4].innerHTML =
+                  response.data[i].Product_Price;
+                orderdetail_table.rows[i + 1].cells[5].innerHTML = "";
+                orderdetail_table.rows[i + 1].cells[6].innerHTML =
+                  response.data[i].Sales_Type;
+                orderdetail_table.rows[i + 1].cells[7].innerHTML = "";
+                orderdetail_table.rows[i + 1].cells[8].innerHTML = "";
+                orderdetail_table.rows[i + 1].cells[9].innerHTML = "";
+                orderdetail_table.rows[i + 1].cells[10].innerHTML =
+                  response.data[i].Order_No;
+                orderdetail_table.rows[i + 1].cells[11].innerHTML = Place_Name;
+                orderdetail_table.rows[i + 1].cells[12].innerHTML = Sales_Name;
+                orderdetail_table.rows[i + 1].cells[13].innerHTML = Create_Name;
+                orderdetail_table.rows[i + 1].cells[14].innerHTML = "";
+              }
+            }
+          })
+          .catch((error) => console.log(error));
+      }
+    </script>
+  </body>
+</html>

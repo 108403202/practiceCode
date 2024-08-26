@@ -1,0 +1,29 @@
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+
+}
+body{
+    display:flex;
+    height:100vh;
+    padding:10px;
+    justify-content:center;
+    background:linear-gradient(135deg, #F2EBC9, #1b1c17);
+}
+.container{
+    max-width:800px;
+    background-color: beige;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content:space-between;
+    padding:20px 25px;
+    border-radius: 5px;
+}
+.container form .product-query-form{
+    display:flex;
+    
+}
+.container form .product-query-form input{
+    height:35px;
+}

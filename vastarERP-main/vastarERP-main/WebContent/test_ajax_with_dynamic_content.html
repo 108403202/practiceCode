@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="statics/css/sidebar_base.css" rel="stylesheet">
+        <!-- toast messge CSS, JS -->
+        <link href="statics\css\toast.css" rel="stylesheet">
+        <script src="js\toast.js"></script>
+        <!-- widget.js 日期相關方法, Cookie相關方法, 補0到4碼方法-->
+        <script src="js\widget.js"></script>
+        <!--loding.css-->
+        <!-- <link href="statics/css/loding.css" rel="stylesheet"> -->
+        <!--Boxicons CDN Links -->
+        <link href='https://unpkg.com/boxicons@2.1.3/css/boxicons.min.css' rel='stylesheet'>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        
+    </head>
+    <body>
+        <div class="sidebar close">
+            <div class="logo-details">
+                <i class='bx bxs-cat'></i>
+                <span class="logo_name">Vastar_ERP</span>
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="#">
+                        <i class='bx bx-grid-alt'></i>
+                        <span class="link_name">Dashboard</span>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name" href="#">系統資料</a></li>
+                        <li><a class="link_name" href="#">基本資料</a></li>
+                        <li><a class="link_name" href="#">庫存管理</a></li>
+                        <li><a class="link_name" href="#">各類單據</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="icon-links">
+                        <a href="#">
+                            <i class='bx bx-cog'></i>
+                            <span class="link_name">系統設定</span>
+                        </a>
+                        <i class='bx bx-chevron-down arrow'></i>
+                    </div>
+                    <ul class="sub-menu">
+                        <li><a class="link_name" href="#">系統設定</a></li>
+                        <li><a href="#">權限設定</a></li>
+                        <li><a href="#">系統設定</a></li>
+                        <li><a href="#">類別設定</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="icon-links">
+                        <a href="#">
+                            <i class='bx bx-collection' ></i>
+                            <span class="link_name">基本資料</span>
+                        </a>
+                        <i class='bx bx-chevron-down arrow'></i>
+                    </div>
+                    <ul class="sub-menu">
+                        <li><a class="link_name" href="#">基本資料</a></li>
+                        <li><a href="#">部門主檔</a></li>
+                        <li><a href="#">員工主檔</a></li>
+                        <li><a href="customer.html">客戶主檔</a></li>
+                        <li><a href="#">產品主檔</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="icon-links">
+                        <a href="#">
+                            <i class='bx bx-cabinet'></i>
+                            <span class="link_name">庫存管理</span>
+                        </a>
+                        <i class='bx bx-chevron-down arrow'></i>
+                    </div>
+                </li>
+                <li>
+                    <div class="icon-links">
+                        <a href="#">
+                            <i class='bx bxs-spreadsheet'></i>
+                            <span class="link_name">各類單據</span>
+                        </a>
+                        <i class='bx bx-chevron-down arrow'></i>
+                    </div>
+                    <ul class="sub-menu">
+                        <li><a class="link_name" href="#">各類單據</a></li>
+                        <li><a href="Sidebar.php">銷貨退(憑)單</a></li>
+                        <li><a href="pre_order_voucher_ver2.php">預購單</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="profile-details">
+                        <div class="profile-content">
+                    <!--<img src="statics/img/vastar_logo.png" alt="profileImg">--> 
+                    </div>
+                    <div class="name-job">
+                        <div class="profile_name">
+                        </div>
+                    <div class="job">員工相關資訊</div>
+                    </div>
+                    <i class='bx bx-log-out' ></i>
+                    </div>
+                </li>
+                
+            </ul>
+        </div>
+        
+        <section class="home-section">
+            <div class="home-content">
+                <i class='bx bx-menu'></i>
+                <span>Drop Down Sidebar</span>
+            </div>
+            
+        </section>
+
+        <script>
+            
+            // 讓下拉可以呈現sub-menu的功能
+            let arrow = document.querySelectorAll(".arrow");/*選取所有class name有 arrow的選擇器
+            然後建立一個串列，基本上就是所有有下拉icon的*/
+            for(var i=0; i < arrow.length; i++){
+                arrow[i].addEventListener("click", (e)=>{
+                let arrowParent = e.target.parentElement.parentElement;
+                arrowParent.classList.toggle("showMenu");
+                });
+            }
+
+            // 讓sidebar縮小至左邊的功能
+            let sidebar = document.querySelector(".sidebar");
+            let sidebarBtn = document.querySelector(".bx-menu");
+            console.log(sidebarBtn);
+            sidebarBtn.addEventListener("click",()=>{
+                sidebar.classList.toggle("close");
+            });
+
+            // 左下角登出icon加入登出功能
+            let logoutBtn = document.querySelector(".bx-log-out");
+            console.log(logoutBtn);
+            logoutBtn.addEventListener('click',()=>{
+                console.log(document.cookie); // 會得到一串cookie值是以分號串接的cookie
+                var cuser_name = getCookie("cuser_name");
+                alert(cuser_name + "\n確定要登出嗎?");
+                window.location = "login.html"; // 登出跳轉回登入頁面
+            });
+            
+            //用來讀取想要的cookie值
+            function getCookie(name){
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return decodeURI(parts.pop().split(';').shift()); 
+              //因為獲得的php setcookie()得到的cookie值, 會進行urlencode,
+              // 所以return時要記的進行decode
+            }
+
+            //刪除cookie值
+            function clearCookie(name) {  
+                setCookie(name, "", -1);  
+            }  
+        </script>
+    </body>
+</html>

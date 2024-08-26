@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>出貨明細</title>
+    <link href="statics\css\searchform.css" rel="stylesheet">
+    <link href="menu_style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- toast messge CSS, JS -->
+    <link href="statics\css\toast.css" rel="stylesheet">
+    <script src="js\toast.js"></script>
+</head>
+
+<body>
+
+    <div>
+        <form method="post" action="" class="form-query">
+
+            <div class="input">
+                <div>
+                    <label for="Counter_No">產品編號</label>
+                    <input type="text" id="Product_No" name="Product_No" size="10" disabled>
+                </div>
+
+                <div>
+                    <label for="Counter_Name">產品名稱</label>
+                    <input type="text" id="Product_Name" name="Product_Name" size="10" disabled>
+                </div>
+                <div>
+                    <label for="deliveryway">配送方式</label>
+                    <select id="deliveryway" name="deliveryway" style="width:70px; height:27px;">
+                        <option value="宅配">宅配</option>
+                        <option value="自取">自取</option>
+                        <option value="待出貨">待出貨</option>
+
+                    </select>
+                </div>
+                <div>
+                    <label for="amount">數量</label>
+                    <input type="text" id="amount" name="amount" size="10" disabled>
+                </div>
+            </div>
+
+
+            <div class="action">
+                <div class="div-form-button">
+                    <input type="button" id="confirmbutton" name="action" value="確認"></input>
+                </div>
+            </div>
+
+
+        </form>
+
+    </div>
+    <center>
+        <table id="sales_detail_table" border="1" rules="all" cellpadding="5" cellspacing="50" style=" font-size:14px; border: 0.5px solid ; 
+           border-collapse: collapse; width: 790px; ">
+            <thead>
+                <tr height="30" align="center">
+                    <td width="20"></td>
+                    <td>產品條碼</td>
+                    <td>產品名稱</td>
+                    <td>數量</td>
+                    <td>預計出貨日</td>
+                    <td>收件人</td>
+                    <td>電話</td>
+                    <td>手機</td>
+                    <td>地址</td>
+                    <td>宅配單號</td>
+                    <td>備註欄</td>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr contenteditable="false">
+                    <td contenteditable="false" align="center">1</td>
+                    <td></td>
+                    <td></td>
+                    <td class="amount_listener"></td>
+                    <td><input type="date" id="Order_Date_1" style="width:100%;" /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr contenteditable="false">
+                    <td contenteditable="false" align="center">2</td>
+                    <td></td>
+                    <td></td>
+                    <td class="amount_listener"></td>
+                    <td> <input type="date" id="Order_Date_1" style="width:100%;" /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr contenteditable="false">
+                    <td contenteditable="false" align="center">3</td>
+                    <td></td>
+                    <td></td>
+                    <td class="amount_listener"></td>
+                    <td> <input type="date" id="Order_Date_1" style="width:100%;" /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <tr contenteditable="false">
+                    <td contenteditable="false" align="center">4</td>
+                    <td></td>
+                    <td></td>
+                    <td class="amount_listener"></td>
+                    <td><input type="date" id="Order_Date_1" style="width:100%;" /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr contenteditable="false">
+                    <td contenteditable="false" align="center">5</td>
+                    <td></td>
+                    <td></td>
+                    <td class="amount_listener"></td>
+                    <td><input type="date" id="Order_Date_1" style="width:100%;" /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr contenteditable="false">
+                    <td contenteditable="false" align="center">6</td>
+                    <td></td>
+                    <td></td>
+                    <td class="amount_listener"></td>
+                    <td><input type="date" id="Order_Date_1" style="width:100%;" /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr contenteditable="false">
+                    <td contenteditable="false" align="center">7</td>
+                    <td></td>
+                    <td></td>
+                    <td class="amount_listener"></td>
+                    <td><input type="date" id="Order_Date_1" style="width:100%;" /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr contenteditable="false">
+                    <td contenteditable="false" align="center">8</td>
+                    <td></td>
+                    <td></td>
+                    <td class="amount_listener"></td>
+                    <td><input type="date" id="Order_Date_1" style="width:100%;" /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr contenteditable="false">
+                    <td contenteditable="false" align="center">9</td>
+                    <td></td>
+                    <td></td>
+                    <td class="amount_listener"></td>
+                    <td><input type="date" id="Order_Date_1" style="width:100%;" /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr contenteditable="false">
+                    <td contenteditable="false" align="center">10</td>
+                    <td></td>
+                    <td></td>
+                    <td class="amount_listener"></td>
+                    <td><input type="date" id="Order_Date_1" style="width:100%;" /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <script type="text/javascript">
+        window.addEventListener('DOMContentLoaded', () => {
+            var purchasename = window.opener.document.getElementById('purchasenameid').value;
+            var sales_tab = window.opener.document.getElementById("inside-sales-table");
+            var table = document.getElementById("sales_detail_table");
+            var rowCount = table.rows.length;
+            var trClicked = getCookie("detailtrClicked");
+            document.getElementById("Product_Name").value = sales_tab.rows[trClicked].cells[1].innerHTML;
+            document.getElementById("amount").value = sales_tab.rows[trClicked].cells[2].innerHTML;
+            console.log(rowCount);
+            if (purchasename.length != 0 && purchasename != '<br>' && sales_tab.rows[trClicked].cells[1]
+                .innerHTML) {
+                axios.defaults.headers.post["Content-Type"] = "application/json;charset=utf-8";
+                axios.post('https://webapi.vastar.com.tw/erpapi/api/Customer/List', {
+                        UserID: 'vastar',
+                        Password: 'vastar@2673',
+                        Staff_No: '',
+                        Name: '',
+                        FuzzySearch: purchasename
+                    })
+                    .then((response) => {
+                        console.log(response);
+                        console.log(response.data.length);
+                        console.log(response.data)
+                        var address = response.data[0]["City"] + response.data[0]["District"] + response
+                            .data[0]
+                            [
+                                "Address"
+                            ]
+                        if (response.data[0]["Result"] == 0) {
+                            for (var i = 1; i < 2; i++) {
+                                table.rows[i].cells[2].innerHTML = sales_tab.rows[trClicked].cells[1]
+                                    .innerHTML;
+                                table.rows[i].cells[3].innerHTML = sales_tab.rows[trClicked].cells[2]
+                                    .innerHTML;
+                                table.rows[i].cells[5].innerHTML = response.data[0]["Name"];
+                                table.rows[i].cells[6].innerHTML = response.data[0]["Phone_No"];
+                                table.rows[i].cells[7].innerHTML = response.data[0]["Mobile_Phone_No_1"];
+                                table.rows[i].cells[3].setAttribute('contenteditable', 'true');
+                            }
+                            document.cookie =
+                                `CustomerNo = ${response.data[0]["Customer_No"]}; path=/; max-age=3600;`; // 儲存顧客編號以搜尋收貨人
+
+                        }
+                        // response.data.forEach(function(value){
+                        //     table.HTML = value["Customer_No"];
+                        // });
+                    })
+                    .catch((error) => console.log(error));
+
+                axios.post('https://webapi.vastar.com.tw/erpapi/api/Product/List', {
+                        UserID: 'vastar',
+                        Password: 'vastar@2673',
+                        Product_No: '',
+                        Product_Name: '',
+                        FuzzySearch: document.getElementById("Product_Name").value
+                    })
+                    .then((response) => {
+                        console.log(response);
+                        console.log(response.data.length);
+                        console.log(response.data)
+                        if (response.data[0]["Result"] == 0) {
+                            document.getElementById("Product_No").value = response.data[0]["Product_No"];
+
+                        }
+                        // response.data.forEach(function(value){
+                        //     table.HTML = value["Customer_No"];
+                        // });
+                    })
+                    .catch((error) => console.log(error));
+
+                axios.post('https://webapi.vastar.com.tw/erpapi/api/Receiver/List', {
+                        UserID: 'vastar',
+                        Password: 'vastar@2673',
+                        CustomerNo: localStorage.getItem("Customer_No")
+                    })
+                    .then((response) => {
+                        console.log(response);
+                        console.log(response.data.length);
+                        console.log(response.data)
+                        if (response.data[0]["Result"] == 0) {
+                            localStorage.setItem('Receiver_No', response.data[0]["Receiver_No"]);
+                            localStorage.setItem('Receiver_Name', response.data[0]["Receiver_Name"]);
+                            localStorage.setItem('Receiver_Phone_No', response.data[0][
+                                "Receiver_Phone_No"
+                            ]);
+                            localStorage.setItem('Receiver_Mobile_Phone_No', response.data[0][
+                                "Receiver_Mobile_Phone_No"
+                            ]);
+                            localStorage.setItem('Receiver_Address', response.data[0]["Receiver_Address"]);
+                        } else if (response.data[0]["Result"] == -1) {
+                            Toast.alert("收貨人資料不存在");
+                        }
+                        // response.data.forEach(function(value){
+                        //     table.HTML = value["Customer_No"];
+                        // });
+                    })
+                    .catch((error) => console.log(error));
+
+                axios.post('https://webapi.vastar.com.tw/erpapi/api/OrderDelivery/Query', {
+                        UserID: 'vastar',
+                        Password: 'vastar@2673',
+                        Order_No: localStorage.getItem('Order_No'),
+                        Item_No: localStorage.getItem('Item_No')
+                    })
+                    .then((response) => {
+                        console.log(response);
+                        console.log(response.data.length);
+                        console.log(response.data)
+                        for (i = 0; i < response.data.length; i++) {
+                            if (response.data[i]["Result"] == 0) {
+                                table.rows[i + 1].cells[1].innerHTML = response.data[i].BarCode;
+                                table.rows[i + 1].cells[2].innerHTML = response.data[i].Product_Name;
+                                table.rows[i + 1].cells[3].innerHTML = response.data[i].Quantity;
+                                table.rows[i + 1].cells[5].innerHTML = response.data[i].Receiver_Name;
+                                table.rows[i + 1].cells[6].innerHTML = response.data[i]
+                                    .Receiver_Mobile_Phone_No;
+                                table.rows[i + 1].cells[7].innerHTML = response.data[i].Receiver_Phone_No;
+                                table.rows[i + 1].cells[8].innerHTML = response.data[i].Receiver_Address;
+                                table.rows[i + 1].cells[9].innerHTML = response.data[i].Delivery_Item_No;
+                                document.getElementById("confirmbutton").disabled = true;
+
+                            } else if (response.data[i]["Result"] == -1) {}
+                        }
+                    })
+                    .catch((error) => console.log(error));
+            }
+        }, false);
+
+
+
+        var salestab = document.getElementById("sales_detail_table");
+        console.log(salestab);
+        var salestab_tbody_list = salestab.getElementsByTagName("tbody")[0].getElementsByTagName('tr');
+        console.log("中間表格的每一列節點: ", salestab_tbody_list);
+        for (var i = 0; i < salestab_tbody_list.length; i++) {
+            //為每一列的 產品名稱欄位 添加事件
+            td = salestab_tbody_list[i].getElementsByTagName('td')[8];
+            td.addEventListener("click", chooseaddress, false);
+            td.addEventListener("click", getClickTd, false);
+            // console.log(td);
+        }
+
+        function getClickTd(e, trNo) {
+            var trNo = ""; // 被點選的td編號, 並在之後用cookie存取, 方便add_product頁面使用
+            target = e.target; // 點選的欄位
+            console.log("target: ", target);
+            childNodesLength = target.childNodes.length; // 觸發元件的子串列, 如果>0, 代表有元素
+            console.log("childNodesLength: ", childNodesLength);
+            trNo = target.parentNode.getElementsByTagName('td')[0].firstChild.nodeValue;
+            console.log("被點選的Td節點: ", target);
+            console.log("被點選的Td節點編號: ", trNo);
+            document.cookie = `chooseaddressclick = ${trNo}; path=/; max-age=3600;`; // 將點選的列 給定tdClicked cookie變數
+
+        }
+
+        function chooseaddress() {
+            window.open('order_detail_address.html', '選擇地址', type = '_self');
+
+        }
+
+        $(function() {
+            //Assign Click event to Button.
+            var el = document.getElementById('confirmbutton');
+            var sales_tab = window.opener.document.getElementById("inside-sales-table");
+
+            el.addEventListener('click', function() {
+                var selected_delivery_wary = document.getElementById("deliveryway").value;
+                var trClicked = getCookie("detailtrClicked");
+                sales_tab.rows[trClicked].cells[6].innerHTML = selected_delivery_wary; // 產品名稱
+                localStorage.setItem('Remark', selected_delivery_wary);
+                orderDetailInsert();
+                orderDeliveryInsert();
+                setTimeout(function() {
+                    window.close()
+                }, 400);
+
+
+            });
+
+
+
+        });
+
+        // 銷貨憑單明細新增
+        function orderDeliveryInsert() {
+            axios.defaults.headers.post["Content-Type"] = "application/json;charset=utf-8";
+            var table = document.getElementById("sales_detail_table");
+            for (var i = 1; i < 11; i++) {
+                if (table.rows[i].cells[2].innerHTML != '' && table.rows[i].cells[3].innerHTML > 0) {
+                    var Delivery_Item_No = paddingLeft(table.rows[i].cells[0].innerHTML, 4);
+                    console.log(Delivery_Item_No);
+                    axios.post('https://webapi.vastar.com.tw/erpapi/api/OrderDelivery/Insert', {
+                            UserID: 'vastar',
+                            Password: 'vastar@2673',
+                            Order_No: localStorage.getItem('Order_No'),
+                            Item_No: localStorage.getItem('Item_No'),
+                            Delivery_Item_No: Delivery_Item_No,
+                            Product_No: localStorage.getItem('Product_No'),
+                            Product_Name: localStorage.getItem('Product_Name'),
+                            Product_Spec: localStorage.getItem('Product_Spec'),
+                            Product_Color: localStorage.getItem('Product_Color'),
+                            BarCode: '',
+                            Quantity: parseInt(localStorage.getItem('Quantity')),
+                            Delivery_Type: document.getElementById("deliveryway").value,
+                            Delivery_No: '',
+                            Receiver_No: localStorage.getItem('Receiver_No'),
+                            Receiver_Name: localStorage.getItem('Receiver_Name'),
+                            Receiver_Phone_No: localStorage.getItem('Receiver_Phone_No'),
+                            Receiver_Mobile_Phone_No: localStorage.getItem('Receiver_Mobile_Phone_No'),
+                            Receiver_Address: localStorage.getItem('Receiver_Address')
+                        })
+                        .then((response) => {
+                            console.log(response);
+                            console.log(response.data.length);
+                            console.log(response.data);
+                            if (response.data["Result"] == -1) {
+                                Toast.alert("出貨明細新增失敗");
+                            } else if (response.data["Result"] == 0) {
+                                Toast.alert("出貨明細新增成功");
+                            }
+                        })
+                        .catch((error) => console.log(error));
+                }
+            }
+        }
+
+        function orderDetailInsert() {
+            axios.defaults.headers.post["Content-Type"] = "application/json;charset=utf-8";
+
+            axios.post('https://webapi.vastar.com.tw/erpapi/api/OrderDetail/Insert', {
+                    UserID: 'vastar',
+                    Password: 'vastar@2673',
+                    Order_No: localStorage.getItem('Order_No'),
+                    Item_No: localStorage.getItem('Item_No'),
+                    Sales_Type: localStorage.getItem('Sales_Type'),
+                    Customer_No: localStorage.getItem('Customer_No'),
+                    Product_No: localStorage.getItem('Product_No'),
+                    Product_Name: localStorage.getItem('Product_Name'),
+                    Product_Spec: localStorage.getItem('Product_Spec'),
+                    Product_Color: localStorage.getItem('Product_Color'),
+                    Quantity: parseInt(localStorage.getItem('Quantity')),
+                    Product_Price: parseInt(localStorage.getItem('Product_Price')),
+                    TotalPrice: parseInt(localStorage.getItem('TotalPrice')),
+                    Remark: localStorage.getItem('Remark')
+                })
+                .then((response) => {
+                    console.log(response);
+                    console.log(response.data.length);
+                    console.log(response.data);
+
+                    // response.data.forEach(function(value){
+                    //     table.HTML = value["Customer_No"];
+                    // });
+                })
+                .catch((error) => console.log(error));
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return decodeURI(parts.pop().split(';').shift());
+            //因為獲得的php setcookie()得到的cookie值, 會進行urlencode,
+            // 所以return時要記的進行decode
+        }
+
+        //刪除cookie值
+        function clearCookie(name) {
+            setCookie(name, "", -1);
+        }
+
+        function paddingLeft(str, lenght) {
+            if (str.length >= lenght)
+                return str;
+            else
+                return paddingLeft("0" + str, lenght);
+        }
+
+        document.querySelectorAll('.amount_listener')
+            .forEach(e => e.addEventListener('input', function() {
+                var total_amount = 0;
+                var clickrowIndex = e.parentElement.rowIndex;
+                var table = document.getElementById("sales_detail_table");
+                var amount_limit = document.getElementById("amount").value
+                var insert_value = table.rows[clickrowIndex].cells[3].innerHTML;
+                for (var i = 1; i <= clickrowIndex; i++) {
+                    if (e.innerHTML != 0 && e.innerHTML != '<br>') {
+                        total_amount = total_amount + parseInt(table.rows[i].cells[3].innerHTML);
+                    }
+                }
+
+                if (parseInt(insert_value) >= amount_limit) {
+                    table.rows[clickrowIndex].cells[3].innerHTML = amount_limit - total_amount + parseInt(
+                        insert_value);
+                }
+
+                if (total_amount < amount_limit && insert_value > 0) {
+                    table.rows[clickrowIndex + 1].cells[2].innerHTML = table.rows[clickrowIndex].cells[2]
+                        .innerHTML;
+                    table.rows[clickrowIndex + 1].cells[5].innerHTML = table.rows[clickrowIndex].cells[5]
+                        .innerHTML;
+                    table.rows[clickrowIndex + 1].cells[6].innerHTML = table.rows[clickrowIndex].cells[6]
+                        .innerHTML;
+                    table.rows[clickrowIndex + 1].cells[7].innerHTML = table.rows[clickrowIndex].cells[7]
+                        .innerHTML;
+                    table.rows[clickrowIndex + 1].cells[3].setAttribute('contenteditable', 'true');
+
+
+                } else if (total_amount >= amount_limit) {
+                    for (var i = clickrowIndex + 1; i < 11; i++) {
+                        for (var cell = 1; cell < 10; cell++) {
+                            if (cell != 4) {
+                                table.rows[i].cells[cell].innerHTML = '';
+                            }
+                            table.rows[i].cells[3].setAttribute('contenteditable', 'false');
+
+                        }
+                    }
+                }
+                var rowCount = table.rows.length;
+
+
+            }));
+        </script>
+</body>
+
+</html>

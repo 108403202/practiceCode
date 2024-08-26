@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="sales_order_style.css" rel="stylesheet" type="text/css">
+    <title>銷貨單</title>
+    <script type="text/javascript">
+        function test(test){
+      //頁面跳轉
+        window.open('add_product.html',config='height=300,width=500',target='_self');
+        }
+    </script>
+</head>
+<body bgcolor="#E0E0E0">
+
+    <div class="layout">
+        <div class="layout_logo">
+            <ul class="drop-down-menu">
+                <li style="font-size:20px"><a href="#">系統資料</a>
+                    <ul>
+                        <li style="font-size:20px"><a href="#">權限設定</a>
+                        </li>
+                        <li style="font-size:20px"><a href="#">系統設定</a>
+                        </li>
+                        <li style="font-size:20px"><a href="#">類別設定</a>
+                        </li>
+                    </ul>
+                </li>
+                <li style="font-size:20px"><a href="#">基本資料</a>
+                    <ul>
+                        <li style="font-size:20px"><a href="#">部門主檔</a>
+                        </li>
+                        <li style="font-size:20px"><a href="#">員工主檔</a>
+                        </li>
+                        <li style="font-size:20px"><a href="custormer.html">客戶主檔</a>
+                        </li>
+                        <li style="font-size:20px"><a href="#">產品主檔</a>
+                        </li>
+                    </ul>
+                </li>
+                <li style="font-size:20px"><a href="#">庫存管理</a>
+                </li>
+                <li style="font-size:20px"><a href="#">各類單據</a>
+                    <ul>
+                        <li style="font-size:20px"><a href="#">銷售單</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul><br/> 
+               
+            <form action="" method="post"></form>
+                <table align="left">
+                    <thead>
+                        <tr> 
+                            <td align="right"><b>承購人：</b></td>
+                            <td><input type="text" name="purchaser_name" id="purchasenameid" size="13" required></td>
+                            <th><input name="purchaser_name_button" type="button" value="查詢" onclick="window.open('purchaser_name.php',config='height=300,width=500',target='_self');" style="width:40px;font-size:14px"/></th>                  
+                            <td align="right"><b>銷貨地點：</b></td>
+                            <td><input type="text" name="place_sale" id="placenameid" size="13" required></td>
+                            <th><input name="place_sale_button" type="button" value="查詢" onclick="window.open('place_sale.php',config='height=300,width=500',target='_self');" style="width:40px; font-size:14px"/></th> 
+                        </tr>
+                        <tr> 
+                            <td align="right"><b>聯絡電話：</b></td>
+                            <td><input type="text" name="purchaser_phone_number" id="purchasephoneid" size="13" required></td>
+                            <th><input name="purchaser_phone_number_button" type="button" value="查詢" onclick="window.open('purchaser_name.php',config='height=300,width=500',target='_self');" style="width:40px;height:25px; font-size:14px"/></th> 
+                            <td align="right"><b>銷售人員：</b></td>
+                            <td><input type="text" name="seller_name"  size="13" required></td>
+                            <th><input name="seller_name_button" type="button" value="查詢" onclick="window.open('seller_name.php',config='height=300,width=500',target='_self');" style="width:40px;height:25px; font-size:14px"/></th>                            
+                        </tr>
+                        <tr> 
+                            <td align="right"><b>收貨人：</b></td>
+                            <td><input type="text" name="receiver_name" id="receivenameid" size="13" required></td>
+                            <th><input name="receiver_name_button" type="button" value="查詢" onclick="window.open('receiver_name.php',config='height=300,width=500',target='_self');" style="width:40px;height:25px; font-size:14px"/></th> 
+                            <td align="right"><b>製單人員：</b></td>
+                            <td><input type="text" name="making_staff_name" size="13" required></td>
+                            <th><input name="making_staff_name_button" type="button" value="查詢" onclick="window.open('making_staff_name.php',config='height=300,width=500',target='_self');" style="width:40px;height:25px; font-size:14px"/></th>                            
+                        </tr>
+                    </thead>        
+                            <tr> 
+                                <td align="right"><b>聯絡電話：</b></td>
+                                <td><input type="text" name="purchaser_phone_number" size="10" required></td>
+                                <th><input name="purchaser_phone_number_button" type="button" value="查詢"  style="width:40px;height:25px; font-size:14px"/></th> 
+                                <td align="right"><b>銷售人員：</b></td>
+                                <td><input type="text" name="seller_name" size="10" required></td>
+                                <th><input name="seller_name_button" type="button" value="查詢" onclick="window.open('seller_name.php',config='height=300,width=500',target='_self');" style="width:40px;height:25px; font-size:14px"/></th>                            
+                            </tr>
+                            <tr> 
+                                <td align="right"><b>收貨人：</b></td>
+                                <td><input type="text" name="receiver_name" size="10" required></td>
+                                <th><input name="receiver_name_button" type="button" value="查詢" onclick="window.open('receiver_name.php',config='height=300,width=500',target='_self');" style="width:40px;height:25px; font-size:14px"/></th> 
+                                <td align="right"><b>製單人員：</b></td>
+                                <td><input type="text" name="making_staff_name" size="10" required></td>
+                                <th><input name="making_staff_name_button" type="button" value="查詢" onclick="window.open('making_staff_name.php',config='height=300,width=500',target='_self');" style="width:40px;height:25px; font-size:14px"/></th>                            
+                            </tr>
+                </table>
+            </form>    
+        </div>
+        <div class="layout_name">
+            <h1 align="center">廣南國際有限公司</h1>
+            <h1 align="center"><b>Vastar International Corp.</b></h1>
+            <select  name="type_select" align="center" style="width:370px;height:60px; font-size:26px" onChange="location = this.options[this.selectedIndex].value;">
+                <option value="sales_order.html">銷貨(退)憑單</option>
+                <option value="pre_Order_voucher.html">預購憑單</option>
+            </select>
+        </div>
+        <div class="layout_right">
+            <img src="statics/img/vastar_logo.png" alt="logo" width="275" height="125"/><br/>
+
+            <b>單號：</b>
+            <input type="text" name="order_number" size="10" required>
+            <input name="order_number_button" type="button" value="查詢" onclick="window.open('making_staff_name.html',config='height=300,width=500',target='_self');" style="width:40px;height:25px; font-size:14px"/><br/> 
+            <b>銷售日期起</b>
+            <input id="start_date" type="date"><br/>
+            <b>銷售日期迄</b>
+            <input id="end_date" type="date"><br/>
+            <input name="invoice" type="button" id="Submit" value="發票" />
+        </div>
+        <div class="layout_form">
+            <table border="1"  rules="all" cellpadding="5" cellspacing="50" style="border: 3px solid ; 
+            border-collapse: collapse; width:1500px;">
+                <thead>
+                    <tr onclick="test('產品名稱')"> 
+                        <th>     </th>
+                        <th>產品名稱</th>               
+                        <th>產品條碼</th>
+                        <th>數量</th>
+                        <th>單價</th>
+                        <th>金額</th>
+                        <th>銷售別</th>
+                        <th>出貨明細</th>
+                        <th>備註欄</th>
+                    </tr>
+                </thead>        
+                        <tr contenteditable="true">
+                            <td contenteditable="false">1</td> 
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>                    
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">2</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>                     
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">3</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>                     
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">4</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>                     
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">5</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>                     
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">6</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>                     
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">7</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>                     
+                        </tr>
+                        <tr contenteditable="true">
+                            <td contenteditable="false">8</td>
+                            <td></td>
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td>                     
+                        </tr>
+
+            </table>
+        </div>
+        <div class="layout_down">
+            <table align="left">
+                <thead>
+                    <tr> 
+                        <th align="right">已付款:</th>
+                        <th><input type="text" name="amount_paid" size="10" required></th>                     
+                        <th align="right">總金額:</th>
+                        <th><input type="text" name="total_sum" size="10" required></th>
+                    </tr>
+                </thead>        
+                        <tr> 
+                            <td align="right"><b>餘額：</b></td>
+                            <td><input type="text" name="balance" size="10" required></td>
+                            <td align="right"><b>折扣金額：</b></td>
+                            <td><input type="text" name="discount_amount" size="10" required></td>                           
+                        </tr>
+                        <tr> 
+                            <td align="right"><b>折扣%數：</b></td>
+                            <td><input type="text" name="discount_percentage" size="10" required></td>                           
+                        </tr>
+                        <tr> 
+                            <td><input name="sales_button" type="button" value="銷售額" onclick="window.open('sales.html',config='height=300,width=500',target='_self');" style="width:80px; height:25px; font-size:14px"/></td>  
+                            <td><input type="text" name="sales" size="10" required></td>                           
+                        </tr>
+            </table>
+        </div>
+        <div class="layout_lower_right">
+            <input name="document_review_button" type="button" value="單據審核:" style="width:80px; height:25px; font-size:14px"/>
+            <input type="text" name="document_review" size="10" required>
+            <input name="document_review_inq_button" type="button" value="查詢"  onclick="window.open('document_review.html',config='height=300,width=500',target='_self');" style="width:40px;height:25px; font-size:14px"/>
+            <input name="approved_button" type="button"  value="核准: "  style="width:80px;height:25px; font-size:14px"/>
+            <input type="text" name="approved" size="10" required>
+            <input name="approved_inq_button" type="button"  value="查詢"  style="width:40px;height:25px; font-size:14px"/><br/>
+            <input name="mount" type="button" value="掛載"  style="width:100px;height:30px; font-size:16px"/>
+            <input name="new" type="button" value="新增" style="width:100px;height:30px; font-size:16px"/>
+            <input name="delete" type="button" value="刪除" style="width:100px;height:30px; font-size:16px"/><br/>
+            <input name="delete" type="button" value="下一筆" style="width:100px;height:30px; font-size:16px; position:relative; left:350px; top: 50px; "/>
+        </div>
+            
+    </div>
+</body>
+
+</html>
+
+

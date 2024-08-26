@@ -1,0 +1,13 @@
+.input-box {
+  text-align: left;
+  width: 100%;
+}
+.input-box {
+  text-align: left;
+  display: inline-block;
+}
+label {
+    width: 100px;
+    text-align: left;
+    display: inline-block;
+    }

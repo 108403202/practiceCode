@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<link href="register_style.css" rel="stylesheet" type="text/css">
+<title>Vastar ERP</title>
+</head>
+<body>
+	<header>
+		<div class="system_name">
+			<ul class="header">
+				<li id="vastar_logo"><img src="statics/img/vastar_logo.png" width="200" height="100"></li>
+			</ul>
+   	 	</div>
+	</header>
+    
+    <div class="register_page">
+    	<div id="container1">
+    		<div class="register">  
+    			<h4>註冊帳號</h4>
+    		 		<input type="text" id="fullname" name="fullname" placeholder="使用者全名" required>
+    		 		<div class="tab"></div>
+    		 		<input type="text" id="account" name="account" placeholder="帳號" required>
+    		 		<div class="tab"></div>
+    		 		<input type="text" id="phone" name="phone" placeholder="手機" required>
+    		 		<div class="tab"></div>
+    		 		<input type="text" id="email" name="email" placeholder="email" pattern="[a-z0-9._%+-]+@+[a-z0-9._%+-]" required>
+    		 		<div class="tab"></div>
+    		 		<input type="text" id="password" name="password" placeholder="密碼" required>
+    		 		<div class="tab"></div>
+    		 		<input type="text" id="comfirm_password" name="comfirm_password" placeholder="確認密碼" required>
+    		 		<div class="tab"></div><br>
+    		 		<input type="submit" id="authentication_email_submmit" value="送出" class="submit">
+    		 		<h5></h5>
+				</form> 
+         	</div><!-- login end-->
+		</div><!-- container1 end-->
+	</div><!-- login_page end-->
+	<h6><a href="login.html" style="color:black;text-decoration: none;">返回</a></h6>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+				// 處理表單點擊事件
+				var $form = $('#submit');
+				//var pwd1 = $('#member_password').val();
+    			//var pwd2 = $('#member_checkedpassword').val();
+				
+				$form.click(function() {
+					check();
+				});
+				
+				// var $form = $('#submit');
+				// $form.click(function() {
+				//    if(pwd1 != pwd2){
+				//  	alert("確認密碼不吻合！");
+				//   	return false;
+				//      document.getElementById('submit').disabled = true;
+				//     }
+				//  	else{
+				// 		 submit();
+				//      }
+				// });
+				function check()
+				{
+					var pwd1=document.getElementById("password").value;
+					var pwd2=document.getElementById("confirm_password").value;
+					if(pwd1!=pwd2){
+						alert("兩次密碼不一樣!");
+					}
+					else{
+						submit();
+						alert("認證信已送出，請至信箱確認郵件後啟用帳號");
+					}
+				}
+
+				function submit() {
+					var name = $('#fullname').val();
+					var account = $('#account').val();
+					var email = $('#email').val();
+					var password = $('#password').val();
+					var phone = $('#phone').val();
+
+					// 將資料組成JSON格式
+					var data_object = {
+						"fullname": name,
+						"account": account,
+						"email": email,
+						"password": password,
+						"phone": phone
+					};
+
+					// 將JSON格式轉換成字串
+					var data_string = JSON.stringify(data_object);
+
+					// 發出POST的AJAX請求
+					$.ajax({
+						type: "POST",
+						url: "api/member.do",
+						data: data_string,
+						crossDomain: true,
+						cache: false,
+						dataType: 'json',
+						timeout: 5000,
+						success: function (response) {
+							$('#flashMessage').html(response.message);
+							$('#flashMessage').show();
+							if(response.status == 200){
+								location.href = "/vastar_erp/authentication.html";
+							}
+						},
+						error: function () {
+							alert("無法連線到伺服器！");
+						}
+					});
+				}
+			});
+		//determine verify process!!!
+   	</script>
+</body>
+</html>
+

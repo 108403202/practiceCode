@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>登入</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="statics/css/login.css">
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <!-- toast messge CSS, JS -->
+        <link href="statics\css\toast.css" rel="stylesheet">
+        <script src="js\toast.js"></script>
+        <!-- widget.js 日期相關方法, Cookie相關方法, 補0到4碼方法-->
+        <script src="js\widget.js"></script>
+        <script>
+            window.addEventListener("DOMContentLoaded", () => {
+                const user_password = document.getElementById("User_Password");
+                user_password.addEventListener("keypress", (e) => {
+                    if(e.code === "Enter"){
+                        document.getElementById("login_btn").click();
+                    }
+                }, false);
+
+            }, false);
+            
+            function User_No_blur(){
+                const No = document.getElementById("User_No");
+                const Name = document.getElementById("User_Name");
+                
+                //alert('User_No='+x.value);
+                
+                //POST請求
+                axios.defaults.headers.post["Content-Type"] = "application/json;charset=utf-8";
+                axios.post('https://webapi.vastar.com.tw/erpapi/api/User/Login',{
+                UserID: 'vastar',
+                Password: 'vastar@2673',
+                User_No: No.value,
+                User_Password: ""
+                })
+                .then( (response) => {
+                    // console.log(response);
+                    // console.log(response.status);
+                    // console.log(response.data.Name.length);
+                    if (response.data.Name.length > 0) 
+                    {      
+                    Name.value = response.data.Name;  // 使用者輸入帳號, 會輸出名字
+                    }  
+                })
+                .catch( (error) => console.log(error));
+            }
+            function userLogin(){
+                const No = document.getElementById("User_No");
+                const Password = document.getElementById("User_Password");
+
+                //POST請求
+                axios.defaults.headers.post["Content-Type"] = "application/json;charset=utf-8";
+                axios.post('https://webapi.vastar.com.tw/erpapi/api/User/Login',{
+                UserID: 'vastar',
+                Password: 'vastar@2673',
+                User_No: No.value,
+                User_Password: Password.value
+                })
+                .then( (response) => {
+                    // console.log(response);
+                    // console.log(response.data.Name.length);
+                    if (response.data.Result === 0) {
+                        // 登入成功
+                        localStorage.setItem('User_No', No.value);
+                        localStorage.setItem('User_Type', response.data.User_Type);
+                        localStorage.setItem('Create_No', No.value);
+                        localStorage.setItem('Name', response.data.Name);
+                        document.cookie = `User_No = ${No.value}; path=/;`;
+                        document.cookie = `User_Type = ${response.data.User_Type}; path=/;`;
+                        Toast.show(`${response.data.Message}`,'success');
+                        window.location.href="Sidebar.html";
+                    }else{
+                        Toast.show(`${response.data.Message}`,'error');
+                    }
+                })
+                .catch( (error) => console.log(error));
+                
+            }
+            function userLoginReset(){
+                const No = document.getElementById("User_No");
+                const Name = document.getElementById("User_Name");
+                const Password = document.getElementById("User_Password");
+                const Code = document.getElementById("User_Code");
+                
+                No.value = "";
+                setTimeout(() => {Name.value = "";}, 500);
+                Password.value = "";
+                Code.value = "";    
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <img src="statics/img/vastar_logo.png" alt="vastar-logo" height="60px" style="position:absolute;  top:10px; left:160px; ">
+            <div class="title">登入</div>
+            <form action="loginapi.php" method="post">
+                <div class="user-details">
+                    <div class="input-box">
+                        <span class="details">代碼</span>
+                        <input type="text" id="User_No" name="User_No" placeholder="請輸入員工代碼" required onblur=User_No_blur()>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">姓名</span>
+                        <input type="text" id="User_Name" name="User_Name" placeholder="請輸入員工姓名" disabled>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">密碼</span>
+                        <input type="password" id="User_Password" name="User_Password" placeholder="請輸入員工密碼" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">條碼</span>
+                        <input type="text" id="User_Code" name="User_Code" placeholder="請輸入員工條碼" >
+                    </div>
+                </div>
+                <div class="button">
+                    <input id="login_btn" type="button" value="登入" onclick="userLogin()">
+                    <input id="reset_btn" type="button" value="重製" onclick="userLoginReset()">
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

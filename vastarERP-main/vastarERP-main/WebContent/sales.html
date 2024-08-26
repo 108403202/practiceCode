@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>銷售額</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/widget.js"></script>
+    <!--小工具類js function -->
+    <!-- toast messge CSS, JS -->
+    <link href="statics\css\toast.css" rel="stylesheet" />
+    <script src="js\toast.js"></script>
+  </head>
+  <body bgcolor="#E0E0E0">
+    <table
+      id="sales_table"
+      border="1"
+      class="sales_calculate"
+      rules="all"
+      width="100%"
+      cellpadding="1"
+      style="border: 1px solid; border-collapse: collapse; width: 100%"
+    >
+      <caption></caption>
+      <thead>
+        <th></th>
+        <th>現金</th>
+        <th>禮券</th>
+        <th>商品券</th>
+        <th>提貨券</th>
+        <th>抵用券</th>
+        <th>分期期數</th>
+        <th>分期總金額</th>
+        <th>英特拉</th>
+        <th>信用卡</th>
+        <th>其他</th>
+        <th>總金額</th>
+        <th>備註欄</th>
+        <th>日期</th>
+        <th></th>
+      </thead>
+      <tr contenteditable="true">
+        <td contenteditable="false">1</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><input type="date" id="Order_Date_1" /></td>
+        <td contenteditable="false">
+          <input
+            type="button"
+            value="確認"
+            onclick="disable_table(this,1,sales_button_2)"
+            style="width: 100%; height: 25px; font-size: 14px"
+          />
+        </td>
+      </tr>
+      <tr contenteditable="false">
+        <td>2</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><input type="date" id="Order_Date_2" /></td>
+        <td contenteditable="false">
+          <input
+            type="button"
+            id="sales_button_2"
+            value="確認"
+            disabled="disabled"
+            onclick="disable_table(this,2,sales_button_3)"
+            style="width: 100%; height: 25px; font-size: 14px"
+          />
+        </td>
+      </tr>
+      <tr contenteditable="false">
+        <td>3</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><input type="date" id="Order_Date_3" /></td>
+        <td contenteditable="false">
+          <input
+            type="button"
+            id="sales_button_3"
+            value="確認"
+            disabled="disabled"
+            onclick="disable_table(this,3,sales_button_4)"
+            style="width: 100%; height: 25px; font-size: 14px"
+          />
+        </td>
+      </tr>
+      <tr contenteditable="false">
+        <td>4</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><input type="date" id="Order_Date_4" /></td>
+        <td contenteditable="false">
+          <input
+            type="button"
+            id="sales_button_4"
+            value="確認"
+            disabled="disabled"
+            onclick="disable_table(this,4,sales_button_5)"
+            style="width: 100%; height: 25px; font-size: 14px"
+          />
+        </td>
+      </tr>
+      <tr contenteditable="false">
+        <td>5</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><input type="date" id="Order_Date_5" /></td>
+        <td contenteditable="false">
+          <input
+            type="button"
+            id="sales_button_5"
+            value="確認"
+            disabled="disabled"
+            onclick="disable_table(this,5,sales_button_6)"
+            style="width: 100%; height: 25px; font-size: 14px"
+          />
+        </td>
+      </tr>
+      <tr contenteditable="false">
+        <td>6</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><input type="date" id="Order_Date_6" /></td>
+        <td contenteditable="false">
+          <input
+            type="button"
+            id="sales_button_6"
+            value="確認"
+            disabled="disabled"
+            onclick="disable_table(this,6,sales_button_7)"
+            style="width: 100%; height: 25px; font-size: 14px"
+          />
+        </td>
+      </tr>
+      <tr contenteditable="false">
+        <td>7</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><input type="date" id="Order_Date_7" /></td>
+        <td contenteditable="false">
+          <input
+            type="button"
+            id="sales_button_7"
+            value="確認"
+            disabled="disabled"
+            onclick="disable_table(this,7,sales_button_8)"
+            style="width: 100%; height: 25px; font-size: 14px"
+          />
+        </td>
+      </tr>
+      <tr contenteditable="false">
+        <td>8</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><input type="date" id="Order_Date_8" /></td>
+        <td contenteditable="false">
+          <input
+            type="button"
+            id="sales_button_8"
+            value="確認"
+            disabled="disabled"
+            onclick="disable_table(this,8)"
+            style="width: 100%; height: 25px; font-size: 14px"
+          />
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+<script type="text/javascript">
+    const sales_tb = document.getElementById("sales_table"); // 獲取 銷貨明細表格節點
+
+    window.addEventListener('DOMContentLoaded', () =>{
+        OrderPaymentQuery();
+    }, false);
+
+    Order_Date_1.value = returnToday();
+
+    function sales_table_fill_up(row){
+        for (let i = 1; i < 12; i++) {
+            sales_table.rows[row].cells[i].innerHTML = 0;
+            parseInt(sales_table.rows[row].cells[i].innerHTML);
+        }
+    }
+    function sales_table_add (row){document.querySelectorAll('.sales_calculate')
+            .forEach(e => e.addEventListener('input', function() {
+                let lump_sum = 0;
+                for (let i = 1; i < 11; i++) {
+                    let input_num = sales_table.rows[row].cells[i].innerHTML;
+                    if (input_num == '<br>' || input_num == 0){
+                        input_num = 0;
+                        lump_sum = lump_sum + parseInt(input_num);
+                    }else if(input_num != '<br>'){
+
+                        lump_sum = lump_sum + parseInt(input_num);
+                    }
+                }
+                sales_table.rows[row].cells[11].innerHTML = lump_sum;
+                //window.opener.document.getElementById('amount_paid').value = lump_sum
+                /*for(let i = 1; i < 9; i++){
+                    let sales_total = 0
+                    parseInt(sales_total) = parseInt(sales_total) + sales_table.rows[i].cells[11].innerHTML
+                    window.opener.document.getElementById('sales-summury').value = sales_total;
+                }*/
+            }));
+    }
+    function sales_total(){
+        let sales_total = 0
+        for(let i = 1; i < 9; i++){
+            parseInt(sales_total) = parseInt(sales_total) + sales_table.rows[i].cells[11].innerHTML
+        }
+        window.opener.document.getElementById('amount_paid').value = 22;
+    }
+    for(let i = 1; i < 9; i++){
+        sales_table_add(i);
+    }
+    for(let i = 1; i < 9; i++){
+        sales_table_fill_up(i);
+    }
+    function disable_table(button,row,next_button){
+
+        for (let i = 1; i < 14; i++) {
+            document.getElementById("sales_table").rows[row].cells[i].contentEditable = "false";
+        }
+        for (let i = 1; i < 14; i++) {
+            document.getElementById("sales_table").rows[row+1].cells[i].contentEditable = "true";
+        }
+        document.getElementById("sales_table").rows[row+1].cells[13].innerHTML = returnToday();
+        button.disabled = "disabled";
+        next_button.disabled=false;
+        let sales_total = 0;
+        parseInt(sales_total);
+        for(let i = 1; i < 9; i++){
+            sales_total = sales_total + parseInt(sales_table.rows[i].cells[11].innerHTML);
+        }
+        window.opener.document.getElementById('amount_paid').value = sales_total;
+        window.opener.document.getElementById('amount_balance').value = window.opener.document.getElementById('amount_sales').value - window.opener.document.getElementById('amount_paid').value
+        OrderPaymentInsert(row);
+      }
+
+    function OrderPaymentInsert(row){
+  //POST請求
+          axios.defaults.headers.post["Content-Type"] =
+            "application/json;charset=utf-8";
+          axios
+            .post("https://webapi.vastar.com.tw/erpapi/api/OrderPayment/Insert", {
+              UserID: "vastar",
+              Password: "vastar@2673",
+              Order_No: localStorage.getItem('Order_No'),
+              Item_No: paddingLeft(row,4),
+              Payment_Date: sales_tb.rows[row].cells[13].getElementsByTagName('input')[0].value,
+              Payment_A: sales_tb.rows[row].cells[1].innerHTML,
+              Payment_B: sales_tb.rows[row].cells[2].innerHTML,
+              Payment_C: sales_tb.rows[row].cells[3].innerHTML,
+              Payment_D: sales_tb.rows[row].cells[4].innerHTML,
+              Payment_E: sales_tb.rows[row].cells[5].innerHTML,
+              Payment_FN: sales_tb.rows[row].cells[6].innerHTML0,
+              Payment_F: sales_tb.rows[row].cells[7].innerHTML,
+              Payment_G: sales_tb.rows[row].cells[8].innerHTML,
+              Payment_H: sales_tb.rows[row].cells[9].innerHTML,
+              Payment_I: sales_tb.rows[row].cells[10].innerHTML,
+              Payment_Sum: sales_tb.rows[row].cells[11].innerHTML,
+              Remark: sales_tb.rows[row].cells[12].innerHTML
+            })
+            .then((response) => {
+              console.log(response);
+              if (response.data.Result == -1) {
+                // 如果沒有找到銷貨明細
+                console.log(response.data.Message);
+                Toast.alert(`${response.data.Message}`, "error");
+              } else if (response.data.Result == 0) {
+                console.log(response.data);
+                Toast.show("付款明細新增成功! ", "success");
+                /*根據得到的response動態增加頁面下方的動態資料表格*/
+                // 先增加列 -> 欄位 -> 節點
+              }
+            })
+            .catch((error) => console.log(error));
+    }
+
+    function OrderPaymentQuery(){
+      //POST請求
+      axios.defaults.headers.post["Content-Type"] =
+            "application/json;charset=utf-8";
+          axios
+            .post("https://webapi.vastar.com.tw/erpapi/api/OrderPayment/Query", {
+              UserID: "vastar",
+              Password: "vastar@2673",
+              Order_No: localStorage.getItem('Order_No'),
+            })
+            .then((response) => {
+              console.log(response);
+
+              for (let i = 0; i < response.data.length; i++) {
+                if (response.data[i].Result == -1) {
+                  // 如果沒有找到銷貨明細
+                  console.log(response.data[0].Message);
+                } else if (response.data[i].Result == 0) {
+                  console.log(response.data[i]);
+                  sales_tb.rows[i + 1].cells[1].innerHTML = response.data[i].Payment_A;
+                  sales_tb.rows[i + 1].cells[2].innerHTML = response.data[i].Payment_B;
+                  sales_tb.rows[i + 1].cells[3].innerHTML = response.data[i].Payment_C;
+                  sales_tb.rows[i + 1].cells[4].innerHTML = response.data[i].Payment_D;
+                  sales_tb.rows[i + 1].cells[5].innerHTML = response.data[i].Payment_E;
+                  sales_tb.rows[i + 1].cells[6].innerHTML = response.data[i].Payment_FN;
+                  sales_tb.rows[i + 1].cells[7].innerHTML = response.data[i].Payment_F
+                  sales_tb.rows[i + 1].cells[8].innerHTML = response.data[i].Payment_G
+                  sales_tb.rows[i + 1].cells[9].innerHTML = response.data[i].Payment_H
+                  sales_tb.rows[i + 1].cells[10].innerHTML = response.data[i].Payment_I;
+                  sales_tb.rows[i + 1].cells[11].innerHTML = response.data[i].Payment_Sum;
+                  sales_tb.rows[i + 1].cells[12].innerHTML = response.data[i].Remark;
+                  sales_tb.rows[i+1].cells[13].getElementsByTagName('input')[0].value = convertDate(response.data[i].Payment_Date);
+                  for (let j = 1; j < 14; j++) {
+                    sales_tb.rows[i+1].cells[j].contentEditable = "false";
+                  }
+
+                  for (let j = 1; j < 14; j++) {
+                    sales_tb.rows[i+2].cells[j].contentEditable = "true";
+                  }
+                  sales_tb.rows[i+1].cells[14].getElementsByTagName('input')[0].disabled=true;
+                  sales_tb.rows[i+2].cells[14].getElementsByTagName('input')[0].disabled=false;
+
+                }
+              }
+            })
+            .catch((error) => console.log(error));
+    }
+</script>

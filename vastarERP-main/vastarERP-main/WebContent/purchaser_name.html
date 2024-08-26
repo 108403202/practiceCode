@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="statics/css/search_page.css" />
+    <title>承購人選單</title>
+    <!-- axios, jquery, some AJAX library   -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- toast messge CSS, JS -->
+    <link href="statics\css\toast.css" rel="stylesheet" />
+    <script src="js\toast.js"></script>
+    <!-- widget.js 日期相關方法, Cookie相關方法, 補0到4碼方法-->
+    <script src="js\widget.js"></script>
+  </head>
+  <body>
+    <main>
+      <section class="search-part">
+        <div class="search-input">
+          <div class="input-box">
+            <label class="info">承購人代號</label>
+            <input
+              type="text"
+              id="Customer_No"
+              class="text-input"
+              placeholder="請輸入承購人代號"
+            />
+          </div>
+          <div class="input-box">
+            <label class="info">承購人姓名</label>
+            <input
+              type="text"
+              id="Customer_Name"
+              class="text-input"
+              placeholder="請輸入承購人姓名"
+            />
+          </div>
+          <div class="input-box">
+            <label class="info">模糊搜尋</label>
+            <input
+              type="text"
+              id="FuzzySearch"
+              class="text-input"
+              placeholder="代號/姓名/姓氏"
+            />
+          </div>
+        </div>
+
+        <div class="search-button">
+          <input type="button" id="query" class="btn" value="查詢" />
+          <input type="button" id="confirm" class="btn" value="確認" />
+          <input type="button" id="insert" class="btn" value="新增" />
+          <input type="button" id="clear" class="btn" value="清除" />
+        </div>
+      </section>
+      <section class="table-part">
+        <div class="search-table">
+          <table id="purchaser_data_table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>承購人代號</th>
+                <th>承購人姓名</th>
+                <th>電話</th>
+                <th>縣市</th>
+                <th>鄉鎮市區</th>
+                <th>地址</th>
+                <th>手機1</th>
+                <th>手機2</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+    <script type="text/javascript">
+      // window.addEventListener('DOMContentLoaded', purchaserQuery, false);
+      window.addEventListener(
+        "DOMContentLoaded",
+        () => {
+          const query = document.getElementById("query"); // 獲得查詢按鈕節點
+          query.addEventListener("click", purchaserQuery, false); // 為查詢按鈕增加事件
+
+          const insert = document.getElementById("insert"); // 獲得新增按鈕節點
+          insert.addEventListener("click", openCustomer, false);
+
+          const clear = document.getElementById("clear");
+          clear.addEventListener("click", InputClear, false); // 為清除按鈕增加事件
+
+          // 將在銷貨單頁面 承購人的值丟進來 先進行搜尋
+          const search_name =
+            window.opener.document.getElementById("purchasenameid");
+          const search_phone =
+            window.opener.document.getElementById("purchasephoneid");
+          const name = document.getElementById("Customer_Name");
+          const fuzzy = document.getElementById("FuzzySearch");
+
+          if (search_phone.value.length > 0 && search_name.value.length > 0) {
+            console.log("have both name and phone");
+            name.value = search_name.value;
+            fuzzy.value = search_phone.value;
+          } else if (search_phone.value.length > 0) {
+            fuzzy.value = search_phone.value;
+          } else {
+            fuzzy.value = search_name.value;
+          }
+          search_name.value = "";
+          search_phone.value = "";
+
+          purchaserQuery();
+        },
+        false
+      );
+
+      const purchaser_tb = document.getElementById("purchaser_data_table"); // 獲取 承購人表格節點
+      let purchaser_tb_list = purchaser_tb.getElementsByTagName("tbody"); // 獲取 承購人表格 tbody 節點串列
+      let purchaser_tb_body = purchaser_tb_list[0]; // 獲取 承購人表格 tbody 節點
+
+      function purchaserQuery() {
+        TabClear();
+        // 1. 獲得三個input 的節點, 並判斷輸入資料正確性
+        const id = document.getElementById("Customer_No");
+        const name = document.getElementById("Customer_Name");
+        const fuzzy = document.getElementById("FuzzySearch");
+
+        if (
+          fuzzy.value == null ||
+          fuzzy.value == undefined ||
+          fuzzy.value == ""
+        ) {
+          // console.log("單號為空");
+          fuzzy.value = ""; // 將模糊搜尋設定為空字串
+        }
+        if (id.value == null || id.value == undefined || id.value == "") {
+          id.value = ""; // 將承購人編號設定為空字串
+        }
+        if (name.value == null || name.value == undefined || name.value == "") {
+          // console.log("單號為空");
+          name.value = ""; // 將承購人姓名設定為空字串
+        }
+        console.log(id.value);
+        // 2. axios post
+        axios.defaults.headers.post["Content-Type"] =
+          "application/json;charset=utf-8";
+        axios
+          .post("https://webapi.vastar.com.tw/erpapi/api/Customer/List", {
+            UserID: "vastar",
+            Password: "vastar@2673",
+            Customer_No: id.value,
+            Name: name.value,
+            FuzzySearch: fuzzy.value,
+            User_No: getCookie("User_No"),
+          })
+          .then((response) => {
+            console.log(response);
+            console.log(response.data);
+            if (response.data[0].Result == 0) {
+              // 即至少有一筆資料存在, 就將資料顯示出來
+              for (let i = 0; i < response.data.length; i++) {
+                let tr = document.createElement("tr");
+
+                let td1 = document.createElement("td");
+                let td2 = document.createElement("td");
+                let td3 = document.createElement("td");
+                let td4 = document.createElement("td");
+                let td5 = document.createElement("td");
+                let td6 = document.createElement("td");
+                let td7 = document.createElement("td");
+                let td8 = document.createElement("td");
+                let td9 = document.createElement("td");
+
+                let text1 = document.createTextNode(i + 1);
+                let text2 = document.createTextNode(
+                  response.data[i].Customer_No
+                ); // 承購人代號
+                let text3 = document.createTextNode(response.data[i].Name); //承購人姓名
+                let text4 = document.createTextNode(response.data[i].Phone_No); // 聯絡電話
+                let text5 = document.createTextNode(response.data[i].City); //  城市
+                let text6 = document.createTextNode(response.data[i].District); //地區
+                let text7 = document.createTextNode(response.data[i].Address); //地址
+                let text8 = document.createTextNode(
+                  response.data[i].Mobile_Phone_No_1
+                ); //手機1
+                let text9 = document.createTextNode(
+                  response.data[i].Mobile_Phone_No_2
+                ); //手機2
+
+                td1.appendChild(text1);
+                td2.appendChild(text2);
+                td3.appendChild(text3);
+                td4.appendChild(text4);
+                td5.appendChild(text5);
+                td6.appendChild(text6);
+                td7.appendChild(text7);
+                td8.appendChild(text8);
+                td9.appendChild(text9);
+
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+                tr.appendChild(td5);
+                tr.appendChild(td6);
+                tr.appendChild(td7);
+                tr.appendChild(td8);
+                tr.appendChild(td9);
+
+                purchaser_tb_body.appendChild(tr);
+                tr.addEventListener("click", Select, false); // 為表格列添加事件, 選擇表格
+                tr.addEventListener("click", purchaserConfirm, false); // 為表格列添加事件, 確認
+              }
+            } else {
+              Toast.show(`${response.data[0].Message}`, "error");
+            }
+          })
+          .catch((error) => console.log(error));
+      }
+      //填入之前表格清空
+      function TabClear() {
+        let tbody_childlist = purchaser_tb_body.getElementsByTagName("tr");
+        let rows = tbody_childlist.length;
+        if (rows >= 1) {
+          for (i = rows - 1; i >= 0; i--) {
+            purchaser_tb_body.removeChild(tbody_childlist[i]);
+            console.log(i);
+          }
+        }
+      }
+      // 清除上方的輸入表格, 也清除銷貨單頁面的 承購人欄位
+      function InputClear() {
+        const id = document.getElementById("Customer_No");
+        const name = document.getElementById("Customer_Name");
+        const fuzzy = document.getElementById("FuzzySearch");
+
+        const purchaser_input =
+          window.opener.document.getElementById("purchasenameid"); // 獲得銷貨單頁面的節點
+
+        id.value = "";
+        name.value = "";
+        fuzzy.value = "";
+      }
+      function Select(e) {
+        //alert("You click the table! ");
+        let target = e.target; //觸發事件的原件節點
+        let tr = target.parentNode; // 觸發事件的原件節點的父節點, 其實也就是你點選的那一列 的 列節點
+        console.log(tr);
+        let td_list = tr.getElementsByTagName("td"); // 獲取列節點的子節點, 會獲得td節點list
+        console.log(td_list);
+
+        const id = document.getElementById("Customer_No");
+        const name = document.getElementById("Customer_Name");
+        id.value = td_list[1].innerHTML;
+        name.value = td_list[2].innerHTML;
+      }
+      function purchaserConfirm(e) {
+        // function  purchaserConfirm(e) 會在使用者滑鼠點及兩下其中一列後
+        // 將需要的該列資料 填入 到銷貨單頁面, 同時也會將 Customer_No, Receiver_No存入到 localStorage中 供api/Order/Insert 使用
+
+        let target = e.target; //觸發事件的原件節點
+        let tr = target.parentNode; // 觸發事件的原件節點的父節點, 其實也就是你點選的那一列 的 列節點
+        console.log(tr);
+        let td_list = tr.getElementsByTagName("td"); // 獲取列節點的子節點, 會獲得td節點list
+        console.log(td_list);
+
+        // 將資料存到銷貨單頁面
+        window.opener.document.getElementById("purchasenameid").value = ""; // 先清空資料
+        window.opener.document.getElementById("purchasenameid").value =
+          td_list[2].innerHTML;
+        localStorage.setItem("Customer_No", td_list[1].innerHTML);
+        // 電話選擇一個有的儲存, 優先順序以 1.連絡電話 2.手機1 3.手機2, 沒有就留空
+        let Phone_No = td_list[3].innerHTML;
+        console.log(Phone_No);
+        let Mobile_Phone_No_1 = td_list[7].innerHTML;
+        let Mobile_Phone_No_2 = td_list[8].innerHTML;
+        window.opener.document.getElementById("purchasephoneid").value = ""; // 先清空資料
+        if (Phone_No.length > 0) {
+          window.opener.document.getElementById("purchasephoneid").value =
+            Phone_No;
+        } else if (Mobile_Phone_No_1.length > 0) {
+          window.opener.document.getElementById("purchasephoneid").value =
+            Mobile_Phone_No_1;
+        } else if (Mobile_Phone_No_2.length > 0) {
+          window.opener.document.getElementById("purchasephoneid").value =
+            Mobile_Phone_No_2;
+        }
+        console.log("td_list[1].innerHTML: ", td_list[1].innerHTML);
+        // 呼叫 api/Reciever/List 獲得收貨人編號 Receiver_No 並存到localStorage
+        axios.defaults.headers.post["Content-Type"] =
+          "application/json;charset=utf-8";
+        axios
+          .post("https://webapi.vastar.com.tw/erpapi/api/Receiver/List", {
+            UserID: "vastar",
+            Password: "vastar@2673",
+            CustomerNo: td_list[1].innerHTML,
+          })
+          .then((response) => {
+            console.log(response);
+            console.log(response.data.length);
+            if (response.data[0].Result == 0) {
+              localStorage.setItem("Receiver_No", response.data[0].Receiver_No); // 將資料存到localStorage 銷貨單新增需要使用
+              console.log(localStorage.getItem("Receiver_No"));
+
+              // 將資料存到銷貨單頁面
+              window.opener.document.getElementById("receivenameid").value =
+                response.data[0].Receiver_Name;
+              window.close();
+            } else {
+              Toast.show(
+                `${response.data[0].Message}` + " 1秒後將關閉此頁面!",
+                "error"
+              );
+              setTimeout(() => {
+                window.close();
+              }, 1000);
+            }
+          })
+          .catch((error) => console.log(error));
+      }
+      // 開啟客戶主檔頁面
+      function openCustomer(){
+            let my_customer_window = window.open("customer.html", "_blank", "width=900,height=600");
+            my_customer_window.moveTo(50, 50);
+        }
+    </script>
+  </body>
+</html>
